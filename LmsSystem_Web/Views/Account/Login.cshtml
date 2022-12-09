@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family:'Berlin Sans FB';
+            background: rgb(2,78,69);
+            background: linear-gradient(90deg, rgba(2,78,69,1) 0%, rgba(4,35,96,1) 100%);
+        }
+        .form-container {
+            height:500px;
+            width:50%;
+            min-width:380px;
+            margin:auto;
+            color:white;
+            margin-top:10vh;
+
+
+        }
+
+        #img1{
+            width:125px;
+           
+        }
+    </style>
+
+</head>
+<body>
+    <div class="form-container border p-3 ">
+
+        <h1 class="text-center">User Login</h1>
+        <div class="text-center">
+            <img src="~/Content/images/icons8-user-100.png" id="img1" />
+        </div>
+        
+        <div class="container p-3">
+            <form>
+                <div class="mb-3">
+                    <label for="userid" class="form-label">User Id</label>
+                    <input type="text" class="form-control" id="userid" aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <br />
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</body>
+</html>
