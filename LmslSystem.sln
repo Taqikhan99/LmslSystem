@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmsSystem_Web", "LmsSystem_Web\LmsSystem_Web.csproj", "{1AE576E0-1A0B-4651-B639-7FD8CBBAFA33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmsSystem_DAL", "LmsSystem_DAL\LmsSystem_DAL.csproj", "{94C68CD5-7021-4144-81EA-F977AB2611F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1AE576E0-1A0B-4651-B639-7FD8CBBAFA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AE576E0-1A0B-4651-B639-7FD8CBBAFA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AE576E0-1A0B-4651-B639-7FD8CBBAFA33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94C68CD5-7021-4144-81EA-F977AB2611F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C68CD5-7021-4144-81EA-F977AB2611F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C68CD5-7021-4144-81EA-F977AB2611F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C68CD5-7021-4144-81EA-F977AB2611F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
