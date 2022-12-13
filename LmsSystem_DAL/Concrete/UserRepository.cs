@@ -15,13 +15,18 @@ namespace LmsSystem_DAL.Concrete
     {
 
         private SqlConnection con;
-
+        string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
         void connection()
         {
-            string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
+            
             con = new SqlConnection(constr);
         }
 
+        /// <summary>
+        /// Add new User
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public bool AddUser(User user)
         {
             connection();
@@ -56,7 +61,7 @@ namespace LmsSystem_DAL.Concrete
         //    throw new NotImplementedException();
         //}
 
-        public void GetStudents()
+        public List<User> GetStudents()
         {
             connection();
             List<User> students= new List<User>();  
@@ -79,24 +84,124 @@ namespace LmsSystem_DAL.Concrete
                     LastName = Convert.ToString(dr["LastName"]),
                     Email = Convert.ToString(dr["Email"]),
                     RoleId = Convert.ToInt32(dr["RoleId"]),
-                    Password = Convert.ToString(dr["Password"]),
                     DepartId = Convert.ToInt32(dr["DepartId"]),
                     JoinedDate= Convert.ToDateTime(dr["JoinedDate"]),
                     Phone= Convert.ToString(dr["Phone"])
                 });
             }
 
+            return students;
+
+
+        }
+        /// <summary>
+        /// Get All Teachers
+        /// </summary>
+        /// <returns>list of teachers</returns>
+        public List<User> GetTeachers()
+        {
+            connection();
+            List<User> teachers = new List<User>();
+            SqlCommand cmd = new SqlCommand("spGetTeachers", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+            //add to list
+            foreach (DataRow dr in dt.Rows)
+            {
+                teachers.Add(new User
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    FirstName = Convert.ToString(dr["FirstName"]),
+                    LastName = Convert.ToString(dr["LastName"]),
+                    Email = Convert.ToString(dr["Email"]),
+                    RoleId = Convert.ToInt32(dr["RoleId"]),
+                    DepartId = Convert.ToInt32(dr["DepartId"]),
+                    JoinedDate = Convert.ToDateTime(dr["JoinedDate"]),
+                    Phone = Convert.ToString(dr["Phone"])
+                });
+            }
+
+            return teachers;
+        }
+
+        /// <summary>
+        /// Get Students by depart
+        /// </summary>
+        /// <param name="depId"></param>
+        /// <returns>List of students department wise</returns>
+        public List<UsersByDepart> GetStudentsByDepart(int depId)
+        {
+            connection();
+            List<UsersByDepart> students = new List<UsersByDepart>();
+            SqlCommand cmd = new SqlCommand("spGetStudentsByDep", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@departid", depId);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+            //add to list
+            foreach (DataRow dr in dt.Rows)
+            {
+                students.Add(new UsersByDepart
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    UserName = Convert.ToString(dr["UserName"]),
+                    Email = Convert.ToString(dr["Email"]),
+                    Phone = Convert.ToString(dr["Phone"]),
+                    DepartName = Convert.ToString(dr["DepartName"])
+                    
+                });
+            }
+
+            return students;
 
         }
 
-        public void GetTeachers()
+        /// <summary>
+        /// Get Teachers by department
+        /// </summary>
+        /// <param name="depId"></param>
+        /// <returns></returns>
+        public List<UsersByDepart> GetTeachersByDepart(int depId)
         {
+            connection();
+            List<UsersByDepart> teachers = new List<UsersByDepart>();
+            SqlCommand cmd = new SqlCommand("spGetTeachersByDep", con);
 
-        }
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@departid", depId);
 
-        public void GetStudentsByDepart(int id)
-        {
-            throw new NotImplementedException();
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+            //add to list
+            foreach (DataRow dr in dt.Rows)
+            {
+                teachers.Add(new UsersByDepart
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    UserName = Convert.ToString(dr["UserName"]),
+                    Email = Convert.ToString(dr["Email"]),
+                    Phone = Convert.ToString(dr["Phone"]),
+                    DepartName = Convert.ToString(dr["DepartName"])
+
+                });
+            }
+
+            return teachers;
+
         }
 
         public bool UpdateUser(User user)

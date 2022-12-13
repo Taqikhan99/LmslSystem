@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IUserRepository.cs" />
+    <Compile Include="Concrete\DbClass.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UsersByDepart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

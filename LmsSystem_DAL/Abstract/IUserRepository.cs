@@ -12,10 +12,10 @@ namespace LmsSystem_DAL.Abstract
         bool AddUser(User user);
         bool UpdateUser(User user);
         //bool DeleteUser(User user);
-        void GetStudents();
+        List<User> GetStudents();
 
-        void GetTeachers();
+        List<User> GetTeachers();
 
-        void GetStudentsByDepart(int id);
+        List<UsersByDepart> GetStudentsByDepart(int id);
     }
 }
