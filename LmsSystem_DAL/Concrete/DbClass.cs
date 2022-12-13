@@ -10,10 +10,10 @@ namespace LmsSystem_DAL.Concrete
 {
     public class DbClass
     {
-        string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
+        string constr;
         SqlConnection con;
         public DbClass() {
-
+            constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
             con = new SqlConnection(constr);
         }
 

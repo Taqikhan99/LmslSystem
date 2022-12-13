@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Styles.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" id="navbar" >
+  <div class="container-fluid">
+    <div id="navlogo">
+        @Html.ActionLink("ABC SCHOOLS","Index","User",new {@class="navbar-brand mx-5"})
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-3">
+            <li class="nav-item">
+                <a class="nav-link link1" href="#">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link1" href="#">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link1" href="#">Teachers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link1" href="#">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+  </div>
+</nav>
+    <br />
+    <div class="container body-content">
+        @RenderBody()
+        
+       
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

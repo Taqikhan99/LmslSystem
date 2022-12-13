@@ -16,6 +16,10 @@ namespace LmsSystem_Web.Controllers
         // GET: Account
 
         DbClass Db = new DbClass();
+        public ActionResult Index()
+        {
+            return View();
+        }
         public ActionResult Login()
         {
             return View();
@@ -48,10 +52,11 @@ namespace LmsSystem_Web.Controllers
                     return RedirectToAction("Index", "User");
 
                 }
-                ModelState.AddModelError("", "Invalid email or password!");
+                
                 
 
             }
+            ModelState.AddModelError("", "Invalid email or password!");
             return View();
         }
     }

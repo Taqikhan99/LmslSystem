@@ -47,6 +47,7 @@
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UsersByDepart.cs" />
+    <Compile Include="Entities\UserVerify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
