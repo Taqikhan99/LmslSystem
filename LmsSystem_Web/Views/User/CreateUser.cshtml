@@ -47,7 +47,7 @@
                 <div class="col-md-6 mb-4">
 
                     <select name="depart" id="userDepart" class="form-control">
-                        <option value="" disabled selected>Select Depart Id</option>
+                        
                         
                     </select>
                 </div>
@@ -78,3 +78,34 @@
 
 
 </div>
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetDepartments",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].DepartmentID + '">' + data[i].DepartmentName + '</option>';
+                }
+                $("#userDepart").html(s);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/User/GetRoles",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Please Select a Role</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].RoleId + '">' + data[i].RoleName + '</option>';
+                }
+                $("#roleId").html(s);
+            }
+        });
+    });
+
+</script>

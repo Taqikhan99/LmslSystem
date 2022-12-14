@@ -4,6 +4,7 @@ using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,11 +45,27 @@ namespace LmsSystem_Web.Controllers
             return View(users);
         }
 
+        //get departments
+        public ActionResult GetDepartments()
+        {
+            List<Department> departs = _userRepo.getDepartmentOptions();
+                
+            return  Json(departs,JsonRequestBehavior.AllowGet);
 
-        
+        }
+
+        //get roles
+        public ActionResult GetRoles()
+        {
+            List<Roles> roles = _userRepo.getRolesOptions();
+
+            return Json(roles, JsonRequestBehavior.AllowGet);
+
+        }
 
 
 
-       
+
+
     }
 }

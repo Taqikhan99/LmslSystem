@@ -15,7 +15,9 @@ namespace LmsSystem_DAL.Abstract
         List<User> GetStudents();
 
         List<User> GetTeachers();
-
+        List<Department> getDepartmentOptions();
         List<UsersByDepart> GetStudentsByDepart(int id);
+
+        List<Roles> getRolesOptions();
     }
 }

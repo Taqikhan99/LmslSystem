@@ -45,7 +45,7 @@ namespace LmsSystem_Web.Models
         {
             string[] roles= new string[1];
             SqlConnection con =db.GetConnection();
-            SqlCommand cmd = new SqlCommand("spGetRoles", con);
+            SqlCommand cmd = new SqlCommand("spGetUserRoles", con);
 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@userEmail", email);

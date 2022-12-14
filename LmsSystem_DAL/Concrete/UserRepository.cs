@@ -56,6 +56,76 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        /// <summary>
+        /// Get Departments to populate the select box while creating nnew user
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        public List<Department> getDepartmentOptions()
+        {
+            connection();
+            //make departmnt list
+            List<Department> departments = new List<Department>();
+
+            SqlCommand cmd = new SqlCommand("spGetDepartments", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+
+            foreach(DataRow row in dt.Rows)
+            {
+                departments.Add(new Department
+                {
+                    DepartmentId = Convert.ToInt32(row["DepartmentId"]),
+                    DepartmentName = row["DepartName"].ToString()
+                }); 
+            }
+
+            return departments;
+
+
+        }
+
+        /// <summary>
+        /// Get roles options
+        /// </summary>
+        /// <returns></returns>
+        public List<Roles> getRolesOptions()
+        {
+            connection();
+            //make departmnt list
+            List<Roles> roles = new List<Roles>();
+
+            SqlCommand cmd = new SqlCommand("spGetRoles", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                roles.Add(new Roles
+                {
+                    RoleId = Convert.ToInt32(row["RoleId"]),
+                    RoleName = row["RoleName"].ToString()
+                });
+            }
+
+            return roles;
+
+
+        }
+
+
         //public bool DeleteUser(User user)
         //{
         //    throw new NotImplementedException();
