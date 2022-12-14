@@ -89,11 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\styles\bootstrap.min.css" />
-    <Content Include="Content\styles\bootstrap.rtl.css" />
-    <Content Include="Content\styles\bootstrap.rtl.min.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\icons8-user-100.png" />
-    <Content Include="Content\styles\Styles.css" />
+    <Content Include="Content\images\std1.png" />
+    <Content Include="Content\images\teacher.png" />
+    <Content Include="Content\images\university.png" />
+    <Content Include="Content\Styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -120,10 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="Content\styles\bootstrap.rtl.min.css.map" />
-    <Content Include="Content\styles\bootstrap.rtl.css.map" />
-    <Content Include="Content\styles\bootstrap.min.css.map" />
-    <Content Include="Content\styles\bootstrap.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -139,6 +136,10 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
     <Content Include="Views\User\CreateCourse.cshtml" />
+    <Content Include="Views\Shared\AdminHome.cshtml" />
+    <Content Include="Views\Shared\TeacherHome.cshtml" />
+    <Content Include="Views\Shared\StudentHome.cshtml" />
+    <Content Include="Views\User\GetStudents.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

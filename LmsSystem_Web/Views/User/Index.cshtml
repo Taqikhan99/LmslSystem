@@ -3,18 +3,18 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container-fluid">
+<div class="container-fluid homecontainer">
     @if (User.IsInRole("Admin"))
     {
-        <h3>This is Admin Page</h3>
+        Html.RenderPartial("AdminHome");
     }
     @if (User.IsInRole("Teacher"))
     {
-        <h3>This is Teacher Page</h3>
+        Html.RenderPartial("TeacherHome");
     }
     @if (User.IsInRole("Student"))
     {
-        <h3>This is Student Page</h3>
+        Html.RenderPartial("StudentHome");
     }
 
 

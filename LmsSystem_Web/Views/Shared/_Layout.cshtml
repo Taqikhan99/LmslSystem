@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/styles/Styles.css" rel="stylesheet" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
@@ -27,7 +27,7 @@
                 {
 
                 <li class="nav-item">
-                    @Html.ActionLink("Students", "StudentsList", "User", null, new { @class = "link1 nav-link" })
+                    @Html.ActionLink("Students", "GetStudents", "User", null, new { @class = "link1 nav-link" })
                 </li>
                 <li class="nav-item">
                 @Html.ActionLink("Courses", "CoursesList", "Course", null, new { @class = "link1 nav-link" })

@@ -3,5 +3,78 @@
     ViewBag.Title = "CreateUser";
 }
 
-<h2>CreateUser</h2>
 
+
+
+<div class="form-container border p-3 ">
+
+    <h2 class="text-light text-center">CreateUser</h2>
+    <div class="text-center">
+        <img src="~/Content/images/icons8-user-100.png" id="img1" />
+    </div>
+
+    <div class="container p-3">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    
+                    <input type="text" class="form-control" id="userFname" name="fName" placeholder="Enter First Name">
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    
+                    <input type="text" class="form-control" id="userLname" name="lName" placeholder="Enter Last Name">
+                </div>
+
+
+            </div>
+           
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    
+                    <input type="text" class="form-control" id="userEmail" name="Email" placeholder="Enter Email">
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    
+                    <input type="text" class="form-control" id="userPhone" name="Phone" placeholder="Enter Phone Number">
+                </div>
+
+
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <select name="depart" id="userDepart" class="form-control">
+                        <option value="" disabled selected>Select Depart Id</option>
+                        
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="role" id="roleId" class="form-control">
+                        <option value="" disabled selected>Select Role Id</option>
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+
+
+            </div>
+            <br />
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Create User</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>
