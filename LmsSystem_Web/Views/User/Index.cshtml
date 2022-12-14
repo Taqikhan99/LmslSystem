@@ -4,17 +4,19 @@
 }
 
 <div class="container-fluid">
+    @if (User.IsInRole("Admin"))
+    {
+        <h3>This is Admin Page</h3>
+    }
+    @if (User.IsInRole("Teacher"))
+    {
+        <h3>This is Teacher Page</h3>
+    }
+    @if (User.IsInRole("Student"))
+    {
+        <h3>This is Student Page</h3>
+    }
 
-    <div class="HeroSec ">
-        <div class="row">
-            <div class="col-4">
-                hello
-            </div>
-            <div class="col-8">
-                saSA
-            </div>
-        </div>
-    </div>
 
 </div>
 

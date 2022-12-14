@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/styles/Styles.css" rel="stylesheet" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
@@ -19,18 +19,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto gap-3">
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+
+                <li class="nav-item">
+                    @Html.ActionLink("Students", "StudentsList", "User", null, new { @class = "link1 nav-link" })
+                </li>
+                <li class="nav-item">
+                @Html.ActionLink("Courses", "CoursesList", "Course", null, new { @class = "link1 nav-link" })
+                 </li>
+                <li class="nav-item">
+                @Html.ActionLink("Teacher", "TeachersList", "User", null, new { @class = "link1 nav-link" })
+                 </li>
+                }
             <li class="nav-item">
-                <a class="nav-link link1" href="#">Students</a>
+                @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "link1 nav-link" })
             </li>
-            <li class="nav-item">
-                <a class="nav-link link1" href="#">Courses</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link link1" href="#">Teachers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link link1" href="#">Logout</a>
-            </li>
+            }
 
         </ul>
     </div>
@@ -42,6 +51,10 @@
         
        
     </div>
+
+    <footer class="fixed-bottom p-2 text-center text-black">
+        <h5>Copyright © 2022 ABC SCHOOLS </h5>
+    </footer>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -26,7 +27,8 @@ namespace LmsSystem_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserVerify user) {
+        public ActionResult Login(UserVerify user) 
+        {
         
             if(ModelState.IsValid)
             {
@@ -47,7 +49,14 @@ namespace LmsSystem_Web.Controllers
 
                 if(loginSuccess)
                 {
+                    //DataRow row = dt.Rows[0];
+                    //string userEmail = row["Email"].ToString();
+                    //string userRole = row["RoleId"].ToString();
+
+                    //saving in session
+                    //setting auth cookie
                     FormsAuthentication.SetAuthCookie(user.Email, false);
+
 
                     return RedirectToAction("Index", "User");
 
@@ -59,5 +68,16 @@ namespace LmsSystem_Web.Controllers
             ModelState.AddModelError("", "Invalid email or password!");
             return View();
         }
+
+        //Logout
+        public ActionResult Logout()
+        {
+            //logout using form authentication
+
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Login");
+        }
+
     }
 }
