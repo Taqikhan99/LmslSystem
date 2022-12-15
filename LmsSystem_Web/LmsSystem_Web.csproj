@@ -90,7 +90,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\homework.png" />
     <Content Include="Content\images\icons8-user-100.png" />
+    <Content Include="Content\images\immigration.png" />
     <Content Include="Content\images\std1.png" />
     <Content Include="Content\images\teacher.png" />
     <Content Include="Content\images\university.png" />

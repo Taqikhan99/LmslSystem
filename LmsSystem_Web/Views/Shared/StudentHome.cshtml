@@ -1,4 +1,31 @@
 ﻿<h2 class="text-center">
-    This is Student Page for u!
-
+    Welcome @User.Identity.Name
 </h2>
+<br />
+<div class="cardscontainer">
+    
+    
+
+    @* Card for my Departments *@
+    <div class="card">
+        <div class="imgsec">
+            <img src="~/Content/images/homework.png" />
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h3>My Courses</h3>
+            <h4>Check your courses</h4>
+        </div>
+    </div>
+
+    @* Card for my Teachers *@
+    <div class="card">
+        <div class="imgsec">
+            <img src="~/Content/images/immigration.png" />
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h3>Attendance Report</h3>
+            <h4>Check how punctual you are</h4>
+        </div>
+    </div>
+
+</div>
