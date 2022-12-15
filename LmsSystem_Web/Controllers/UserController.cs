@@ -25,11 +25,36 @@ namespace LmsSystem_Web.Controllers
         {
             return View();
         }
+
+
+        //create user get req
+
         [Authorize(Roles = "Admin")]
         public ActionResult CreateUser()
         {
             return View();
         }
+
+        //create user Post req
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = _userRepo.AddUser(user);
+                if (success)
+                {
+                    TempData["smessage"] = "New User Created!";
+                    return RedirectToAction("Index");
+                }
+                TempData["emessage"] = "Something Wrong!";
+
+            }
+
+            return View();
+        }
+
         [Authorize(Roles = "Admin")]
         public ActionResult CreateCourse()
         {

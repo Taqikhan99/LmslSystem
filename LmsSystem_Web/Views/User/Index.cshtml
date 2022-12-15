@@ -20,3 +20,25 @@
 
 </div>
 
+<script>
+    $(function () {
+        var message1 = '@TempData["smessage"]';
+        
+        if (message1 != null) {
+            swal({
+                title: "Success",
+                text: message1,
+                type: info
+                })
+        }
+        if (message2 != null) {
+            swal({
+                title: "Failed",
+                text: message2,
+                type: warning
+            })
+        }
+    })
+
+</script>
+

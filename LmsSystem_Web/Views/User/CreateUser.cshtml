@@ -1,71 +1,78 @@
 ﻿
 @{
     ViewBag.Title = "CreateUser";
+    Layout = "../Shared/_Layout.cshtml";
+
 }
 
 
+<div class="box1">
+    hello
+</div>
 
-
-<div class="form-container border p-3 ">
+<div class="form-container p-3 ">
 
     <h2 class="text-light text-center">CreateUser</h2>
     <div class="text-center">
         <img src="~/Content/images/icons8-user-100.png" id="img1" />
     </div>
 
-    <div class="container p-3">
+    <div class=" p-3">
+
+        @* form to create a user *@
         <form method="post">
             <div class="row">
                 <div class="col-md-6 mb-4">
+
+                    <input type="text" class="form-control" id="userFname" name="FirstName" placeholder="Enter First Name">
                     
-                    <input type="text" class="form-control" id="userFname" name="fName" placeholder="Enter First Name">
                 </div>
-                
+
                 <div class="col-md-6 mb-4">
-                    
-                    <input type="text" class="form-control" id="userLname" name="lName" placeholder="Enter Last Name">
+
+                    <input type="text" class="form-control" id="userLname" name="LastName" placeholder="Enter Last Name">
                 </div>
 
 
             </div>
-           
+
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    
+
                     <input type="text" class="form-control" id="userEmail" name="Email" placeholder="Enter Email">
                 </div>
 
                 <div class="col-md-6 mb-4">
-                    
+
                     <input type="text" class="form-control" id="userPhone" name="Phone" placeholder="Enter Phone Number">
                 </div>
 
 
             </div>
-            
+
             <div class="row">
                 <div class="col-md-6 mb-4">
 
-                    <select name="depart" id="userDepart" class="form-control">
-                        
-                        
-                    </select>
+                    <input type="text" class="form-control" id="userPass" name="Password" placeholder="Enter Password">
                 </div>
 
                 <div class="col-md-6 mb-4">
 
-                    <select name="role" id="roleId" class="form-control">
-                        <option value="" disabled selected>Select Role Id</option>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                    <select name="DepartmentId" id="depart" class="form-control">
+
                     </select>
                 </div>
 
-
             </div>
-            <br />
+
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <select name="RoleId" id="role" class="form-control">
+                    </select>
+                </div>
+            </div>
 
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Create User</button>
@@ -78,8 +85,14 @@
 
 
 </div>
+
+
+
 <script src="~/Scripts/jquery-3.4.0.js"></script>
 <script>
+
+    var message2 = '@TempData["emessage"]';
+
     $(document).ready(function () {
         $.ajax({
             type: "GET",
@@ -88,9 +101,9 @@
             success: function (data) {
                 var s = '<option value="-1">Please Select a Department</option>';
                 for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].DepartmentID + '">' + data[i].DepartmentName + '</option>';
+                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
                 }
-                $("#userDepart").html(s);
+                $("#depart").html(s);
             }
         });
 
@@ -103,7 +116,7 @@
                 for (var i = 0; i < data.length; i++) {
                     s += '<option value="' + data[i].RoleId + '">' + data[i].RoleName + '</option>';
                 }
-                $("#roleId").html(s);
+                $("#role").html(s);
             }
         });
     });

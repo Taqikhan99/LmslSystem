@@ -2,6 +2,14 @@
     font-family:cursive;
     background:#272727;
 }
+th, td {
+    text-align: center;
+}
+
+footer {
+    background: #00B4DB;
+    background: linear-gradient(0deg, #00B4DB 0%, #0083B0 100%);
+}
 #navbar {
     background: #00B4DB;
     background: linear-gradient(0deg, #00B4DB 0%, #0083B0 100%);
@@ -14,10 +22,11 @@
     color: black;
     font-size:1.2rem;
 }
-footer {
-    background: #00B4DB;
-    background: linear-gradient(0deg, #00B4DB 0%, #0083B0 100%);
+
+.form-container{
+    border:3px solid white;
 }
+
 
 .homecontainer {
     padding:3rem;
@@ -52,9 +61,7 @@ footer {
     cursor:pointer;
     transform:scale(1.05);
 }
-th,td{
-    text-align:center;
-}
+
 .imgsec {
     height: 100%;
     background: #093028;
@@ -64,18 +71,13 @@ th,td{
     align-items: center;
     
 }
-    .imgsec img {
+.imgsec img {
         width: 100%;
         border-radius: 1rem;
-    }
-
-
-
-
+}
 
 /*Media queries*/
-
-@media screen and (max-width:800px){
+@media screen and (max-width:800px) {
     .cardscontainer{
         grid-template-columns:1fr;
     }

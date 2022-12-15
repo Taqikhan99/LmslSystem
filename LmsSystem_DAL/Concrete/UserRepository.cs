@@ -37,8 +37,8 @@ namespace LmsSystem_DAL.Concrete
             cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@Phone", user.Phone);
             cmd.Parameters.AddWithValue("@RoleId", user.RoleId);
-            cmd.Parameters.AddWithValue("@DepartId", user.DepartId);
-            cmd.Parameters.AddWithValue("@JoinedDate", user.JoinedDate);
+            cmd.Parameters.AddWithValue("@DepartmentId", user.DepartmentId);
+            
             cmd.Parameters.AddWithValue("@Password", user.Password);
 
             //open conn
@@ -154,7 +154,7 @@ namespace LmsSystem_DAL.Concrete
                     LastName = Convert.ToString(dr["LastName"]),
                     Email = Convert.ToString(dr["Email"]),
                     RoleId = Convert.ToInt32(dr["RoleId"]),
-                    DepartId = Convert.ToInt32(dr["DepartId"]),
+                    DepartmentId = Convert.ToInt32(dr["DepartId"]),
                     JoinedDate= Convert.ToDateTime(dr["JoinedDate"]),
                     Phone= Convert.ToString(dr["Phone"])
                 });
@@ -191,7 +191,7 @@ namespace LmsSystem_DAL.Concrete
                     LastName = Convert.ToString(dr["LastName"]),
                     Email = Convert.ToString(dr["Email"]),
                     RoleId = Convert.ToInt32(dr["RoleId"]),
-                    DepartId = Convert.ToInt32(dr["DepartId"]),
+                    DepartmentId = Convert.ToInt32(dr["DepartId"]),
                     JoinedDate = Convert.ToDateTime(dr["JoinedDate"]),
                     Phone = Convert.ToString(dr["Phone"])
                 });
