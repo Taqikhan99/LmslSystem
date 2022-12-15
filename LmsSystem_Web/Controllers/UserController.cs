@@ -45,10 +45,11 @@ namespace LmsSystem_Web.Controllers
                 bool success = _userRepo.AddUser(user);
                 if (success)
                 {
-                    TempData["smessage"] = "New User Created!";
+                    ViewBag.smessage = "New User Created!";
                     return RedirectToAction("Index");
                 }
-                TempData["emessage"] = "Something Wrong!";
+                else
+                    TempData["emessage"] = "Something Wrong!";
 
             }
 

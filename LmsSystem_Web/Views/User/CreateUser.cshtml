@@ -75,7 +75,7 @@
             </div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Create User</button>
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create User</button>
 
             </div>
 
@@ -91,7 +91,9 @@
 <script src="~/Scripts/jquery-3.4.0.js"></script>
 <script>
 
-    var message2 = '@TempData["emessage"]';
+
+
+
 
     $(document).ready(function () {
         $.ajax({
@@ -120,5 +122,26 @@
             }
         });
     });
+
+
+    function validate () {
+        var fname = document.getElementById("userFname").value;
+        var lname = document.getElementById("userLname").value;
+        var email = document.getElementById("userEmail").value;
+        var phone = document.getElementById("userPhone").value;
+        var password = document.getElementById("userPass").value;
+
+
+        console.log(fname + " " + lname);
+        if (fname == '' || lname == '' || email == '' || phone == '' || password=='') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon:"error"
+            })
+            return false;
+        }
+
+    }
 
 </script>

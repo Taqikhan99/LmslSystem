@@ -19,25 +19,22 @@
 
 
 </div>
-
+<script src="~/Scripts/jquery-3.4.0.min.js"></script>
 <script>
+
+    
+
     $(function () {
-        var message1 = '@TempData["smessage"]';
-        
-        if (message1 != null) {
+        var message1 = '@ViewBag.smessage';
+        console.log(message1)
+        if (message1 != '') {
             swal({
                 title: "Success",
                 text: message1,
-                type: info
+                icon:"success"
                 })
         }
-        if (message2 != null) {
-            swal({
-                title: "Failed",
-                text: message2,
-                type: warning
-            })
-        }
+        
     })
 
 </script>
