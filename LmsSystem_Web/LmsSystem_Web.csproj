@@ -93,9 +93,13 @@
     <Content Include="Content\images\homework.png" />
     <Content Include="Content\images\icons8-user-100.png" />
     <Content Include="Content\images\immigration.png" />
+    <Content Include="Content\images\online-course.png" />
+    <Content Include="Content\images\progrma.png" />
     <Content Include="Content\images\std1.png" />
     <Content Include="Content\images\teacher.png" />
+    <Content Include="Content\images\training.png" />
     <Content Include="Content\images\university.png" />
+    <Content Include="Content\images\webinar.png" />
     <Content Include="Content\Styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -142,6 +146,10 @@
     <Content Include="Views\Shared\TeacherHome.cshtml" />
     <Content Include="Views\Shared\StudentHome.cshtml" />
     <Content Include="Views\User\GetStudents.cshtml" />
+    <Content Include="Views\User\GetCourses.cshtml" />
+    <Content Include="Views\User\CourseRelated.cshtml" />
+    <Content Include="Views\User\CreateProgram.cshtml" />
+    <Content Include="Views\User\GetPrograms.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

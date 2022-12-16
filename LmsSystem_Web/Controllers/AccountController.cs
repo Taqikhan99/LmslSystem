@@ -56,6 +56,7 @@ namespace LmsSystem_Web.Controllers
                     //saving in session
                     //setting auth cookie
                     FormsAuthentication.SetAuthCookie(user.Email, false);
+                    
 
 
                     return RedirectToAction("Index", "User");

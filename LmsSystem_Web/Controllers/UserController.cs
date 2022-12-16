@@ -57,10 +57,32 @@ namespace LmsSystem_Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        //creating course get
         public ActionResult CreateCourse()
         {
             return View();
         }
+        //creating course post
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateCourse(Course c)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = _userRepo.AddCourse(c);
+                if (success)
+                {
+                    ViewBag.smessage = "New Course Created!";
+                    return RedirectToAction("Index");
+                }
+                
+
+            }
+
+            return View();
+        }
+
+
 
         //method to get student list
         [Authorize(Roles = "Admin")]
@@ -89,6 +111,55 @@ namespace LmsSystem_Web.Controllers
 
         }
 
+        //Course Related Work
+        public ActionResult CourseRelated()
+        {
+            return View();
+        }
+
+        //get courses
+        public ActionResult GetCourses()
+        {
+            //take all courses from userreo.getallcourses
+            List<Course> courses =  _userRepo.GetAllCourses();
+            return View(courses);
+        }
+
+
+
+        //add program
+        public ActionResult CreateProgram()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProgram(Programs p)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = _userRepo.AddProgram(p);
+                if (success)
+                {
+                    ViewBag.smessage = "New Course Created!";
+                    return RedirectToAction("Index");
+                }
+
+
+            }
+            return View();
+        }
+
+
+
+        //get program
+        
+        public ActionResult GetPrograms()
+        {
+            List<Programs> progs = new List<Programs>();
+            return View(progs);
+        }
 
 
 

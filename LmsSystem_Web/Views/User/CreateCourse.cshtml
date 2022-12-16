@@ -3,5 +3,59 @@
     ViewBag.Title = "CreateCourse";
 }
 
-<h2>CreateCourse</h2>
+<div class="form-container p-3 ">
+
+    <h2 class="text-light text-center">Create Course</h2>
+    <div class="text-center">
+        <img src="~/Content/images/icons8-user-100.png" id="img1" />
+    </div>
+
+    <div class=" p-3">
+
+        @* form to create a user *@
+        <form method="post">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+
+                    <input type="text" class="form-control" id="coursename" name="CourseName" placeholder="Enter Course Name">
+
+                </div>
+
+                
+
+
+            </div>
+
+            
+
+            <div class="d-grid gap-2">
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Course</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+    function validate() {
+        var cname = document.getElementById("coursename").value;
+
+        if (cname == '') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon: "error"
+            })
+            return false;
+        }
+    }
+
+</script>
 

@@ -46,7 +46,11 @@
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Concrete\DbClass.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
+    <Compile Include="Entities\Class.cs" />
+    <Compile Include="Entities\ClassRoom.cs" />
+    <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Programs.cs" />
     <Compile Include="Entities\Roles.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UsersByDepart.cs" />

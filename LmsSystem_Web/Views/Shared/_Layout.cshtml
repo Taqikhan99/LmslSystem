@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto gap-3">
 
-
+            
             @if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole("Admin"))
@@ -32,7 +32,7 @@
                     @Html.ActionLink("Students", "GetStudents", "User", null, new { @class = "link1 nav-link" })
                 </li>
                 <li class="nav-item">
-                @Html.ActionLink("Courses", "CoursesList", "Course", null, new { @class = "link1 nav-link" })
+                @Html.ActionLink("Courses", "CourseRelated", "User", null, new { @class = "link1 nav-link" })
                  </li>
                 <li class="nav-item">
                 @Html.ActionLink("Teacher", "TeachersList", "User", null, new { @class = "link1 nav-link" })
@@ -59,6 +59,6 @@
     </footer>
     <script src="~/Scripts/jquery-3.4.0.js"></script>
     
-    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

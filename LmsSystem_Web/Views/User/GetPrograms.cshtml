@@ -1,0 +1,47 @@
+﻿@model IEnumerable<LmsSystem_DAL.Entities.Programs>
+@{
+    ViewBag.Title = "GetPrograms";
+}
+
+<h2>GetPrograms</h2>
+
+<h2>@Html.ActionLink("Create Course", "CreateCourse", null, new { @class = "btn btn-success" }) </h2>
+<br />
+<h3 class="text-center text-light">Course List</h3>
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered" style="color:white; overflow-x:scroll;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartId)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgramName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartId)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProgramId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ProgramId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProgramId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

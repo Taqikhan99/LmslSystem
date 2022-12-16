@@ -3,38 +3,43 @@
 </h2>
 <br />
 <div class="cardscontainer">
-    @* card for my students *@
-    <div class="card">
-        <div class="imgsec">
-            <img src="~/Content/images/std1.png" />
-        </div>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <h3>Students</h3>
-            <h4>Students Count</h4>
+    @* card for  students *@
+    <a style="text-decoration:none" href="@Url.Action("GetStudents", "User")">
+        <div class="card">
+            <div class="imgsec">
+                <img src="~/Content/images/std1.png" />
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h3>Students</h3>
+                <h4>Students Count</h4>
 
+            </div>
         </div>
-    </div>
+    </a>
 
-    @* Card for my Departments *@
-    <div class="card">
-        <div class="imgsec">
-            <img src="~/Content/images/university.png" />
+    @* Card for  Departments *@
+    <a style="text-decoration:none" href="@Url.Action("GetStudents", "User")">
+        <div class="card">
+            <div class="imgsec">
+                <img src="~/Content/images/university.png" />
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h3>Departments</h3>
+                <h4>Depart Count</h4>
+            </div>
         </div>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <h3>Departments</h3>
-            <h4>Depart Count</h4>
-        </div>
-    </div>
+    </a>
 
-    @* Card for my Teachers *@
-    <div class="card">
-        <div class="imgsec">
-            <img src="~/Content/images/teacher.png" />
+    @* Card for Teachers *@
+    <a style="text-decoration:none" href="@Url.Action("GetStudents", "User")">
+        <div class="card">
+            <div class="imgsec">
+                <img src="~/Content/images/teacher.png" />
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h3>Teachers</h3>
+                <h4>Teachers Count</h4>
+            </div>
         </div>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <h3>Teachers</h3>
-            <h4>Teachers Count</h4>
-        </div>
-    </div>
-
+        </a>
 </div>

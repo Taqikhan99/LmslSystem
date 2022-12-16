@@ -50,6 +50,7 @@ footer {
 
 .card {
     height: 25vh;
+    
     display: grid;
     grid-template-columns: 1fr 2fr;
     border: none;
@@ -70,9 +71,10 @@ footer {
     justify-content: center;
     align-items: center;
     
+    
 }
 .imgsec img {
-        width: 100%;
+        width: 90%;
         border-radius: 1rem;
 }
 

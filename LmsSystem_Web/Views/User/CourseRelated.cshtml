@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "CourseRelated";
+}
+
+<div class="homecontainer">
+    <h2 class="text-center">Course Related</h2>
+    <div class="cardscontainer  p-3">
+
+        @* card for my students *@
+        <a style="text-decoration:none" href="@Url.Action("GetCourses", "User")">
+            <div class="card">
+                <div class="imgsec">
+                    <img src="~/Content/images/online-course.png" />
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h3>Courses</h3>
+
+
+                </div>
+            </div>
+        </a>
+
+        @* Card for my Departments *@
+        <a style="text-decoration:none" href="@Url.Action("GetClassRooms", "User")">
+            <div class="card">
+                <div class="imgsec">
+                    <img src="~/Content/images/training.png" />
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h3>ClassRooms</h3>
+
+                </div>
+            </div>
+        </a>
+
+        @* Card for my Teachers *@
+        <a style="text-decoration:none" href="@Url.Action("GetClasses", "User")">
+            <div class="card">
+                <div class="imgsec">
+                    <img src="~/Content/images/webinar.png" />
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h3>Classes</h3>
+
+                </div>
+            </div>
+        </a>
+        <a style="text-decoration:none" href="@Url.Action("GetPrograms", "User")">
+            <div class="card">
+                <div class="imgsec">
+                    <img src="~/Content/images/progrma.png" />
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h3>Programs</h3>
+
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+

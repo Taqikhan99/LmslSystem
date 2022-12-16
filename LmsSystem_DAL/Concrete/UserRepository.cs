@@ -56,6 +56,22 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        //Add new course
+        public bool AddCourse(Course course)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("spAddUser", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@FirstName", course.CourseName);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            if (i >= 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Get Departments to populate the select box while creating nnew user
         /// </summary>
@@ -274,9 +290,86 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        //get all courses
+
+        public List<Course> GetAllCourses()
+        {
+            connection();
+            List<Course> courses = new List<Course>();
+            SqlCommand cmd = new SqlCommand("spGetCourses", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                //add new course to data table for each row get
+                courses.Add(new Course
+                {
+                    CourseId = Convert.ToInt32(dr["CourseId"]),
+                    CourseName = dr["CourseName"].ToString()
+                }) ;
+
+            }
+
+            return courses;
+        }
+
+       
+
         public bool UpdateUser(User user)
         {
             throw new NotImplementedException();
+        }
+
+        public bool AddProgram(Programs p)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("spAddProgram", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@progName", p.ProgramName);
+            cmd.Parameters.AddWithValue("@departId", p.DepartId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            if (i >= 1)
+            {
+                return true;
+            }
+            return false;
+
+            
+        }
+
+        public List<Programs> GetAllPrograms()
+        {
+            connection();
+            List<Programs> programs = new List<Programs>();
+            SqlCommand cmd = new SqlCommand("spGetPrograms", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close(); 
+
+            foreach(DataRow dr in dt.Rows)
+            {
+                programs.Add(new Programs
+                {
+                    ProgramId = Convert.ToInt32( dr["ProgramId"]),
+                    ProgramName = dr["ProgramName"].ToString(),
+                    DepartId = Convert.ToInt32(dr["DepartId"])
+                });
+            }
+
+            return programs;
+
         }
     }
 }
