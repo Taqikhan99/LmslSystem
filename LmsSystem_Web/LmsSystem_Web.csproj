@@ -150,6 +150,7 @@
     <Content Include="Views\User\CourseRelated.cshtml" />
     <Content Include="Views\User\CreateProgram.cshtml" />
     <Content Include="Views\User\GetPrograms.cshtml" />
+    <Content Include="Views\User\GetClasses.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

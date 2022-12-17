@@ -13,7 +13,7 @@ namespace LmsSystem_DAL.Concrete
 {
     public class UserRepository : IUserRepository
     {
-
+        DbClass db = new DbClass();
         private SqlConnection con;
         string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
         void connection()
@@ -22,6 +22,8 @@ namespace LmsSystem_DAL.Concrete
             con = new SqlConnection(constr);
         }
 
+        
+
         /// <summary>
         /// Add new User
         /// </summary>
@@ -29,47 +31,31 @@ namespace LmsSystem_DAL.Concrete
         /// <returns></returns>
         public bool AddUser(User user)
         {
-            connection();
-            SqlCommand cmd = new SqlCommand("spAddUser", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-            cmd.Parameters.AddWithValue("@LastName", user.LastName);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Phone", user.Phone);
-            cmd.Parameters.AddWithValue("@RoleId", user.RoleId);
-            cmd.Parameters.AddWithValue("@DepartmentId", user.DepartmentId);
-            
-            cmd.Parameters.AddWithValue("@Password", user.Password);
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@FirstName", user.FirstName));
+            sqlParameters.Add(new SqlParameter("@LastName", user.LastName));
+            sqlParameters.Add(new SqlParameter("@Email", user.Email));
+            sqlParameters.Add(new SqlParameter("@Phone", user.Phone));
+            sqlParameters.Add(new SqlParameter("@RoleId", user.RoleId));
+            sqlParameters.Add(new SqlParameter("@DepartmentId", user.DepartmentId));
+            sqlParameters.Add(new SqlParameter("@Password", user.Password));
 
-            //open conn
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            bool added = db.execInsertProc("spAddUser", sqlParameters);
+
+            return added;
 
         }
 
         //Add new course
         public bool AddCourse(Course course)
         {
-            connection();
-            SqlCommand cmd = new SqlCommand("spAddUser", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@FirstName", course.CourseName);
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            if (i >= 1)
-            {
-                return true;
-            }
-            return false;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@CourseName", course.CourseName));
+            sqlParameters.Add(new SqlParameter("@CourseName", course.ProgramId));
+            bool added = db.execInsertProc("spAddCourse", sqlParameters);
+
+            return added;
+
         }
 
         /// <summary>
@@ -141,6 +127,34 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        public List<Programs> getProgramsOptions()
+        {
+            connection();
+            //make departmnt list
+            List<Programs> programs = new List<Programs>();
+
+            SqlCommand cmd = new SqlCommand("spGetPrograms", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                programs.Add(new Programs
+                {
+                    ProgramId = Convert.ToInt32(row["ProgramId"]),
+                    ProgramName = row["ProgramName"].ToString(),
+                    DepartId= Convert.ToInt32(row["DepartId"])
+                });
+            }
+
+            return programs;
+        }
 
         //public bool DeleteUser(User user)
         //{
@@ -370,6 +384,44 @@ namespace LmsSystem_DAL.Concrete
 
             return programs;
 
+        }
+        //add and get classes
+
+        public bool AddClass(Class c)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Class> GetAllClasses()
+        {
+            connection();
+            List<Class> classes = new List<Class>();
+            SqlCommand cmd = new SqlCommand("spGetClass", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            adapter.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                classes.Add(new Class
+                {
+                    ClassId = Convert.ToInt32(dr["ClassId "]),
+                    UserId = Convert.ToInt32(dr["UserId"]),
+                    CourseId = Convert.ToInt32(dr["CourseId"]),
+                    ClassDay = dr["ClassDay"].ToString(),
+                    ClassTime = Convert.ToDateTime( dr["ClassTime"])
+                });
+            }
+
+            return classes;
+
+
+
+            throw new NotImplementedException();
         }
     }
 }

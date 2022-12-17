@@ -111,6 +111,14 @@ namespace LmsSystem_Web.Controllers
 
         }
 
+        //get programs
+        public ActionResult GetProgramOptions()
+        {
+            List<Programs> progs = _userRepo.getProgramsOptions();
+
+            return Json(progs, JsonRequestBehavior.AllowGet);
+        }
+
         //Course Related Work
         public ActionResult CourseRelated()
         {
@@ -157,10 +165,18 @@ namespace LmsSystem_Web.Controllers
         
         public ActionResult GetPrograms()
         {
-            List<Programs> progs = new List<Programs>();
+            List<Programs> progs = _userRepo.GetAllPrograms();
             return View(progs);
         }
 
+
+
+        //Get and add classes
+        public ActionResult GetClasses()
+        {
+            List<Class> classes = _userRepo.GetAllClasses();
+            return View(classes);
+        }
 
 
 

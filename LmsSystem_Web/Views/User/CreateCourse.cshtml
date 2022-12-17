@@ -7,7 +7,7 @@
 
     <h2 class="text-light text-center">Create Course</h2>
     <div class="text-center">
-        <img src="~/Content/images/icons8-user-100.png" id="img1" />
+        <img src="~/Content/images/online-course.png" />
     </div>
 
     <div class=" p-3">
@@ -21,12 +21,18 @@
 
                 </div>
 
-                
+                <div class="col-md-12 mb-4">
+
+                    <select name="ProgramId" id="program" class="form-control">
+                        </select>
+                </div>
+
+
 
 
             </div>
 
-            
+
 
             <div class="d-grid gap-2">
                 <button type="submit" onclick="return validate()" class="btn btn-primary">Create Course</button>
@@ -56,6 +62,24 @@
             return false;
         }
     }
+
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetProgramOptions",
+            data: "{}",
+            success: function (data) {
+                console.log(data)
+                var s = '<option value="-1">Please Select a Program</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].ProgramId + '">' + data[i].ProgramName + '</option>';
+                }
+                $("#program").html(s);
+            }
+        });
+    })
+    
 
 </script>
 

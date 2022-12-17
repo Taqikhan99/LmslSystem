@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LmsSystem_DAL.Entities.Class>
+@{
+    ViewBag.Title = "GetClasses";
+}
+
+
+<h2>@Html.ActionLink("Create Class", "CreateClass", null, new { @class = "btn btn-success" }) </h2>
+<br />
+<h3 class="text-center text-light">Class List</h3>
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered" style="color:white; overflow-x:scroll;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassTime)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassTime)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ClassId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ClassId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ClassId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

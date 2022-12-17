@@ -10,5 +10,6 @@ namespace LmsSystem_DAL.Entities
     {
         public int CourseId { get; set; }
         public string CourseName { get; set; }
+        public int ProgramId { get; set; }
     }
 }

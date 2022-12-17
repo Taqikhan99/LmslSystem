@@ -14,9 +14,11 @@ namespace LmsSystem_DAL.Abstract
         bool AddProgram(Programs p);
         bool AddCourse(Course course);
 
-        //bool AddClassRoom(ClassRoom room);
 
-        //bool AddClass (Class c);
+
+        bool AddClass(Class c);
+
+
         bool UpdateUser(User user);
         //bool DeleteUser(User user);
         List<User> GetStudents();
@@ -24,10 +26,12 @@ namespace LmsSystem_DAL.Abstract
         List<User> GetTeachers();
         List<Department> getDepartmentOptions();
         List<UsersByDepart> GetStudentsByDepart(int id);
-
+        List<Programs> getProgramsOptions();
         List<Course> GetAllCourses();
         List<Programs> GetAllPrograms(); 
 
         List<Roles> getRolesOptions();
+
+        List<Class> GetAllClasses();
     }
 }

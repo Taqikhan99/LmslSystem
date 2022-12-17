@@ -47,7 +47,6 @@
     <Compile Include="Concrete\DbClass.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Entities\Class.cs" />
-    <Compile Include="Entities\ClassRoom.cs" />
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Programs.cs" />

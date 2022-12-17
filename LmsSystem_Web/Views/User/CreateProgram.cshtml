@@ -3,5 +3,65 @@
     ViewBag.Title = "CreateProgram";
 }
 
-<h2>CreateProgram</h2>
+<div class="form-container p-3 ">
 
+    <h2 class="text-light text-center">Create Course</h2>
+    <div class="text-center">
+        <img src="~/Content/images/progrma.png" />
+    </div>
+
+    <div class=" p-3">
+
+        @* form to create a user *@
+        <form method="post">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+
+                    <input type="text" class="form-control" id="progname" name="ProgramName" placeholder="Enter Program Name">
+
+                </div>
+
+                <div class="col-md-12 mb-4">
+
+                    <select name="DepartId" id="depart" class="form-control">
+                    </select>
+                </div>
+
+
+
+
+            </div>
+
+
+
+            <div class="d-grid gap-2">
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Program</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetDepartments",
+            data: "{}",
+            success: function (data) {
+                console.log(data)
+                var s = '<option value="-1">Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
+                }
+                $("#depart").html(s);
+            }
+        });
+    })
+
+</script>
