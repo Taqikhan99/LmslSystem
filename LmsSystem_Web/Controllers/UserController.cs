@@ -56,6 +56,10 @@ namespace LmsSystem_Web.Controllers
             return View();
         }
 
+
+
+
+
         [Authorize(Roles = "Admin")]
         //creating course get
         public ActionResult CreateCourse()
@@ -150,7 +154,7 @@ namespace LmsSystem_Web.Controllers
                 bool success = _userRepo.AddProgram(p);
                 if (success)
                 {
-                    ViewBag.smessage = "New Course Created!";
+                    ViewBag.smessage = "New Program Created!";
                     return RedirectToAction("Index");
                 }
 
@@ -178,6 +182,37 @@ namespace LmsSystem_Web.Controllers
             return View(classes);
         }
 
+        [Authorize(Roles ="Admin")]
+        
+        public ActionResult CreateClass() {
+
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult CreateClass(Class c)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = _userRepo.AddClass(c);
+                    if (success)
+                    {
+                        ViewBag.smessage = "New Class Created!";
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.smessage = ex.Message;
+                return View();
+            }
+            
+        }
 
 
     }

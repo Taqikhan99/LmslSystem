@@ -22,8 +22,6 @@ namespace LmsSystem_DAL.Concrete
             con = new SqlConnection(constr);
         }
 
-        
-
         /// <summary>
         /// Add new User
         /// </summary>
@@ -163,19 +161,12 @@ namespace LmsSystem_DAL.Concrete
 
         public List<User> GetStudents()
         {
-            connection();
-            List<User> students= new List<User>();  
-            SqlCommand cmd = new SqlCommand("spGetStudents",con);
+            
+            List<User> students= new List<User>();
 
-            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dataTable = db.execGetProc("spGetStudents");
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-            //add to list
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dataTable.Rows)
             {
                 students.Add(new User
                 {
@@ -185,13 +176,11 @@ namespace LmsSystem_DAL.Concrete
                     Email = Convert.ToString(dr["Email"]),
                     RoleId = Convert.ToInt32(dr["RoleId"]),
                     DepartmentId = Convert.ToInt32(dr["DepartId"]),
-                    JoinedDate= Convert.ToDateTime(dr["JoinedDate"]),
-                    Phone= Convert.ToString(dr["Phone"])
+                    JoinedDate = Convert.ToDateTime(dr["JoinedDate"]),
+                    Phone = Convert.ToString(dr["Phone"])
                 });
             }
-
             return students;
-
 
         }
         /// <summary>
@@ -200,19 +189,11 @@ namespace LmsSystem_DAL.Concrete
         /// <returns>list of teachers</returns>
         public List<User> GetTeachers()
         {
-            connection();
             List<User> teachers = new List<User>();
-            SqlCommand cmd = new SqlCommand("spGetTeachers", con);
 
-            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dataTable = db.execGetProc("spGetTeachers");
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-            //add to list
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dataTable.Rows)
             {
                 teachers.Add(new User
                 {
@@ -237,20 +218,13 @@ namespace LmsSystem_DAL.Concrete
         /// <returns>List of students department wise</returns>
         public List<UsersByDepart> GetStudentsByDepart(int depId)
         {
-            connection();
             List<UsersByDepart> students = new List<UsersByDepart>();
-            SqlCommand cmd = new SqlCommand("spGetStudentsByDep", con);
+            List<SqlParameter> sps = new List<SqlParameter>();
+            
+            sps.Add(new SqlParameter("departid", depId));
+            DataTable dataTable = db.execGetProc("spGetStudentsByDep",sps);
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@departid", depId);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-            //add to list
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dataTable.Rows)
             {
                 students.Add(new UsersByDepart
                 {
@@ -259,7 +233,6 @@ namespace LmsSystem_DAL.Concrete
                     Email = Convert.ToString(dr["Email"]),
                     Phone = Convert.ToString(dr["Phone"]),
                     DepartName = Convert.ToString(dr["DepartName"])
-                    
                 });
             }
 
@@ -267,27 +240,17 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
-        /// <summary>
         /// Get Teachers by department
-        /// </summary>
-        /// <param name="depId"></param>
-        /// <returns></returns>
+        
         public List<UsersByDepart> GetTeachersByDepart(int depId)
         {
-            connection();
-            List<UsersByDepart> teachers = new List<UsersByDepart>();
-            SqlCommand cmd = new SqlCommand("spGetTeachersByDep", con);
+            List<UsersByDepart> teachers= new List<UsersByDepart>();
+            List<SqlParameter> sps = new List<SqlParameter>();
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@departid", depId);
+            sps.Add(new SqlParameter("departid", depId));
+            DataTable dataTable = db.execGetProc("spGetStudentsByDep", sps);
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-            //add to list
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dataTable.Rows)
             {
                 teachers.Add(new UsersByDepart
                 {
@@ -296,7 +259,6 @@ namespace LmsSystem_DAL.Concrete
                     Email = Convert.ToString(dr["Email"]),
                     Phone = Convert.ToString(dr["Phone"]),
                     DepartName = Convert.ToString(dr["DepartName"])
-
                 });
             }
 
@@ -334,8 +296,6 @@ namespace LmsSystem_DAL.Concrete
             return courses;
         }
 
-       
-
         public bool UpdateUser(User user)
         {
             throw new NotImplementedException();
@@ -343,34 +303,20 @@ namespace LmsSystem_DAL.Concrete
 
         public bool AddProgram(Programs p)
         {
-            connection();
-            SqlCommand cmd = new SqlCommand("spAddProgram", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@progName", p.ProgramName);
-            cmd.Parameters.AddWithValue("@departId", p.DepartId);
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            if (i >= 1)
-            {
-                return true;
-            }
-            return false;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@progName", p.ProgramName));
+            sqlParameters.Add(new SqlParameter("@departId", p.DepartId));
+            bool added = db.execInsertProc("spAddProgram", sqlParameters);
 
+            return added;
             
         }
 
         public List<Programs> GetAllPrograms()
         {
-            connection();
+            
             List<Programs> programs = new List<Programs>();
-            SqlCommand cmd = new SqlCommand("spGetPrograms", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close(); 
+            DataTable dt = db.execGetProc("spGetPrograms"); 
 
             foreach(DataRow dr in dt.Rows)
             {
@@ -394,16 +340,8 @@ namespace LmsSystem_DAL.Concrete
 
         public List<Class> GetAllClasses()
         {
-            connection();
             List<Class> classes = new List<Class>();
-            SqlCommand cmd = new SqlCommand("spGetClass", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
+            DataTable dt = db.execGetProc("spGetClass");
 
             foreach (DataRow dr in dt.Rows)
             {
