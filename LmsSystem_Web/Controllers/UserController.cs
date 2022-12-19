@@ -23,6 +23,7 @@ namespace LmsSystem_Web.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.smessage = TempData["message"];
             return View();
         }
 
@@ -30,7 +31,7 @@ namespace LmsSystem_Web.Controllers
         //create user get req
 
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateUser()
+        public ActionResult CreateStudent()
         {
             return View();
         }
@@ -38,14 +39,14 @@ namespace LmsSystem_Web.Controllers
         //create user Post req
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateUser(User user)
+        public ActionResult CreateStudent(User user)
         {
             if (ModelState.IsValid)
             {
-                bool success = _userRepo.AddUser(user);
+                bool success = _userRepo.AddStudent(user);
                 if (success)
                 {
-                    ViewBag.smessage = "New User Created!";
+                    TempData["message"] = "New Student Added";
                     return RedirectToAction("Index");
                 }
                 else
@@ -76,7 +77,8 @@ namespace LmsSystem_Web.Controllers
                 bool success = _userRepo.AddCourse(c);
                 if (success)
                 {
-                    ViewBag.smessage = "New Course Created!";
+
+                    TempData["message"] = "New Course Added";
                     return RedirectToAction("Index");
                 }
                 
@@ -97,31 +99,17 @@ namespace LmsSystem_Web.Controllers
             return View(users);
         }
 
-        //get departments
-        public ActionResult GetDepartments()
+        [Authorize(Roles = "Admin")]
+        public ActionResult GetTeachers()
         {
-            List<Department> departs = _userRepo.getDepartmentOptions();
-                
-            return  Json(departs,JsonRequestBehavior.AllowGet);
 
+            List<User> users = _userRepo.GetTeachers();
+
+            return View(users);
         }
 
-        //get roles
-        public ActionResult GetRoles()
-        {
-            List<Roles> roles = _userRepo.getRolesOptions();
 
-            return Json(roles, JsonRequestBehavior.AllowGet);
 
-        }
-
-        //get programs
-        public ActionResult GetProgramOptions()
-        {
-            List<Programs> progs = _userRepo.getProgramsOptions();
-
-            return Json(progs, JsonRequestBehavior.AllowGet);
-        }
 
         //Course Related Work
         public ActionResult CourseRelated()
@@ -154,7 +142,7 @@ namespace LmsSystem_Web.Controllers
                 bool success = _userRepo.AddProgram(p);
                 if (success)
                 {
-                    ViewBag.smessage = "New Program Created!";
+                    TempData["message"] = "New Program Added";
                     return RedirectToAction("Index");
                 }
 
@@ -200,7 +188,7 @@ namespace LmsSystem_Web.Controllers
                     bool success = _userRepo.AddClass(c);
                     if (success)
                     {
-                        ViewBag.smessage = "New Class Created!";
+                        TempData["message"] = "New Class Added";
                         return RedirectToAction("Index");
                     }
                 }
@@ -212,6 +200,66 @@ namespace LmsSystem_Web.Controllers
                 return View();
             }
             
+        }
+
+        //Get and create Teachers
+        public ActionResult CreateTeacher()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateTeacher(User u)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = _userRepo.AddTeacher(u);
+                    if (success)
+                    {
+                        TempData["message"] = "New Teacher Added";
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.smessage = ex.Message;
+                return View();
+            }
+
+            
+        }
+
+
+
+        //Json return methods
+        //get departments
+        public ActionResult GetDepartmentsOptions()
+        {
+            List<Department> departs = _userRepo.getDepartmentOptions();
+
+            return Json(departs, JsonRequestBehavior.AllowGet);
+
+        }
+
+        //get roles
+        public ActionResult GetRolesOptions()
+        {
+            List<Roles> roles = _userRepo.getRolesOptions();
+
+            return Json(roles, JsonRequestBehavior.AllowGet);
+
+        }
+
+        //get programs
+        public ActionResult GetProgramOptions()
+        {
+            List<Programs> progs = _userRepo.getProgramsOptions();
+
+            return Json(progs, JsonRequestBehavior.AllowGet);
         }
 
 

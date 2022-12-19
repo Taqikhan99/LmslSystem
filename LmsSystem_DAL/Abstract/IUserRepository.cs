@@ -9,8 +9,8 @@ namespace LmsSystem_DAL.Abstract
 {
     public interface IUserRepository
     {
-        bool AddUser(User user);
-
+        bool AddStudent(User user);
+        bool AddTeacher(User user);
         bool AddProgram(Programs p);
         bool AddCourse(Course course);
 

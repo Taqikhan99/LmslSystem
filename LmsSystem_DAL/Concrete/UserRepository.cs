@@ -27,14 +27,13 @@ namespace LmsSystem_DAL.Concrete
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool AddUser(User user)
+        public bool AddStudent(User user)
         {
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@FirstName", user.FirstName));
             sqlParameters.Add(new SqlParameter("@LastName", user.LastName));
             sqlParameters.Add(new SqlParameter("@Email", user.Email));
             sqlParameters.Add(new SqlParameter("@Phone", user.Phone));
-            sqlParameters.Add(new SqlParameter("@RoleId", user.RoleId));
             sqlParameters.Add(new SqlParameter("@DepartmentId", user.DepartmentId));
             sqlParameters.Add(new SqlParameter("@Password", user.Password));
 
@@ -44,12 +43,29 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        //Add Teacher
+        public bool AddTeacher(User user)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@FirstName", user.FirstName));
+            sqlParameters.Add(new SqlParameter("@LastName", user.LastName));
+            sqlParameters.Add(new SqlParameter("@Email", user.Email));
+            sqlParameters.Add(new SqlParameter("@Phone", user.Phone));
+            sqlParameters.Add(new SqlParameter("@DepartmentId", user.DepartmentId));
+            sqlParameters.Add(new SqlParameter("@Password", user.Password));
+
+            bool added = db.execInsertProc("spAddTeacher", sqlParameters);
+
+            return added;
+
+        }
+
         //Add new course
-        public bool AddCourse(Course course)
+        public bool AddCourse(Course course) 
         {
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@CourseName", course.CourseName));
-            sqlParameters.Add(new SqlParameter("@CourseName", course.ProgramId));
+            sqlParameters.Add(new SqlParameter("@ProgramId", course.ProgramId));
             bool added = db.execInsertProc("spAddCourse", sqlParameters);
 
             return added;

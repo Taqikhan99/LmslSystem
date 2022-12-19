@@ -97,6 +97,7 @@
     <Content Include="Content\images\progrma.png" />
     <Content Include="Content\images\std1.png" />
     <Content Include="Content\images\teacher.png" />
+    <Content Include="Content\images\teacher2.png" />
     <Content Include="Content\images\training.png" />
     <Content Include="Content\images\university.png" />
     <Content Include="Content\images\webinar.png" />
@@ -152,6 +153,9 @@
     <Content Include="Views\User\GetPrograms.cshtml" />
     <Content Include="Views\User\GetClasses.cshtml" />
     <Content Include="Views\User\CreateClass.cshtml" />
+    <Content Include="Views\User\CreateStudent.cshtml" />
+    <Content Include="Views\User\GetTeachers.cshtml" />
+    <Content Include="Views\User\CreateTeacher.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
