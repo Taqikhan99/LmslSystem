@@ -156,6 +156,7 @@
     <Content Include="Views\User\CreateStudent.cshtml" />
     <Content Include="Views\User\GetTeachers.cshtml" />
     <Content Include="Views\User\CreateTeacher.cshtml" />
+    <Content Include="Views\User\EditStudent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

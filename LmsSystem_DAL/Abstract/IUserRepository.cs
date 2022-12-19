@@ -14,14 +14,16 @@ namespace LmsSystem_DAL.Abstract
         bool AddProgram(Programs p);
         bool AddCourse(Course course);
 
-
-
         bool AddClass(Class c);
 
 
-        bool UpdateUser(User user);
+        bool UpdateStudent(User user);
+        //bool UpdateTeacher(User user);
         //bool DeleteUser(User user);
         List<User> GetStudents();
+
+        User GetStudentById(int id);
+        //User GetTeacherById(int id);
 
         List<User> GetTeachers();
         List<Department> getDepartmentOptions();

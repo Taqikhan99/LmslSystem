@@ -199,6 +199,53 @@ namespace LmsSystem_DAL.Concrete
             return students;
 
         }
+        //Get Student by id
+        public User GetStudentById(int id) {
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@stdId", id));
+
+            User user = new User();
+
+            DataTable dt = db.execGetProc("spGetStdById", sqlParameters);
+
+            if(dt.Rows.Count > 0)
+            {
+                DataRow r = dt.Rows[0];
+                user.Id = Convert.ToInt32(r["Id"]);
+                user.FirstName = r["FirstName"].ToString();
+                user.LastName = r["LastName"].ToString();
+                user.Email = r["Email"].ToString();
+                user.Phone = r["Phone"].ToString() ;
+                user.JoinedDate = Convert.ToDateTime(r["JoinedDate"]);
+                user.DepartmentId= Convert.ToInt32(r["DepartId"]);
+                user.Password= r["Password"].ToString();
+            }
+            return user;
+
+
+        }
+
+
+        //update Student
+        public bool UpdateStudent(User user)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@UserId", user.Id));
+            sqlParameters.Add(new SqlParameter("@FirstName", user.FirstName));
+            sqlParameters.Add(new SqlParameter("@LastName", user.LastName));
+            sqlParameters.Add(new SqlParameter("@Email", user.Email));
+            sqlParameters.Add(new SqlParameter("@Phone", user.Phone));
+            sqlParameters.Add(new SqlParameter("@DepartId", user.DepartmentId));
+            sqlParameters.Add(new SqlParameter("@Password", user.Password));
+
+            bool updated = db.execInsertProc("spUpdateStd", sqlParameters);
+
+            return updated;
+
+        }
+
+
         /// <summary>
         /// Get All Teachers
         /// </summary>
@@ -312,10 +359,10 @@ namespace LmsSystem_DAL.Concrete
             return courses;
         }
 
-        public bool UpdateUser(User user)
-        {
-            throw new NotImplementedException();
-        }
+
+        
+
+        
 
         public bool AddProgram(Programs p)
         {

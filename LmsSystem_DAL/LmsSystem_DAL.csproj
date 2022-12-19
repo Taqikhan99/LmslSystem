@@ -52,6 +52,7 @@
     <Compile Include="Entities\Programs.cs" />
     <Compile Include="Entities\Roles.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserDetails.cs" />
     <Compile Include="Entities\UsersByDepart.cs" />
     <Compile Include="Entities\UserVerify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

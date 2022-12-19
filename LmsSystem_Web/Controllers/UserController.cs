@@ -27,8 +27,9 @@ namespace LmsSystem_Web.Controllers
             return View();
         }
 
-
-        //create user get req
+        //Student Related tasks
+        //================================================
+        //create Student
 
         [Authorize(Roles = "Admin")]
         public ActionResult CreateStudent()
@@ -58,8 +59,56 @@ namespace LmsSystem_Web.Controllers
         }
 
 
+        //method to get student list
+        [Authorize(Roles = "Admin")]
+        public ActionResult GetStudents()
+        {
+
+            List<User> users = _userRepo.GetStudents();
+            ViewBag.smessage = TempData["message"];
+
+            return View(users);
+        }
+
+        [HttpGet]
+        public ActionResult EditStudent(int Id)
+        {
+
+            User user = _userRepo.GetStudentById(Id);
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditStudent(User user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = _userRepo.UpdateStudent(user);
+                    if (success)
+                    {
+                        TempData["message"] = "Student Record Updated";
+                        return RedirectToAction("GetStudents");
+                    }
+                }
+
+                return View();
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return View();
+
+            }
+
+        }
 
 
+
+        //================================================
+        //================================================
 
         [Authorize(Roles = "Admin")]
         //creating course get
@@ -88,16 +137,8 @@ namespace LmsSystem_Web.Controllers
             return View();
         }
 
+       
 
-
-        //method to get student list
-        [Authorize(Roles = "Admin")]
-        public ActionResult GetStudents() {
-
-            List<User> users = _userRepo.GetStudents();
-
-            return View(users);
-        }
 
         [Authorize(Roles = "Admin")]
         public ActionResult GetTeachers()
