@@ -200,14 +200,15 @@ namespace LmsSystem_DAL.Concrete
 
         }
         //Get Student by id
-        public User GetStudentById(int id) {
+        public User GetUserByIdRole(int id,int roleId) {
 
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@stdId", id));
+            sqlParameters.Add(new SqlParameter("@uid", id));
+            sqlParameters.Add(new SqlParameter("@roleid", roleId));
 
             User user = new User();
 
-            DataTable dt = db.execGetProc("spGetStdById", sqlParameters);
+            DataTable dt = db.execGetProc("spGetUserByIdnRole", sqlParameters);
 
             if(dt.Rows.Count > 0)
             {
@@ -228,15 +229,16 @@ namespace LmsSystem_DAL.Concrete
 
 
 
-        public UserDetails GetStudentDetails(int id)
+        public UserDetails GetUserDetails(int id,int roleid)
         {
 
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@stdId", id));
+            sqlParameters.Add(new SqlParameter("@roleId", roleid));
 
             UserDetails user = new UserDetails();
 
-            DataTable dt = db.execGetProc("spGetStdDetails", sqlParameters);
+            DataTable dt = db.execGetProc("spGetUserDetails", sqlParameters);
 
             if (dt.Rows.Count > 0)
             {
@@ -257,7 +259,7 @@ namespace LmsSystem_DAL.Concrete
 
 
         //update Student
-        public bool UpdateStudent(User user)
+        public bool UpdateUser(User user)
         {
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@UserId", user.Id));
@@ -266,14 +268,25 @@ namespace LmsSystem_DAL.Concrete
             sqlParameters.Add(new SqlParameter("@Email", user.Email));
             sqlParameters.Add(new SqlParameter("@Phone", user.Phone));
             sqlParameters.Add(new SqlParameter("@DepartId", user.DepartmentId));
+            sqlParameters.Add(new SqlParameter("@RoleId", user.RoleId));
             sqlParameters.Add(new SqlParameter("@Password", user.Password));
 
-            bool updated = db.execInsertProc("spUpdateStd", sqlParameters);
+            bool updated = db.execInsertProc("spUpdateUser", sqlParameters);
 
             return updated;
 
         }
 
+
+        //delete student
+        public bool DeleteUser(int id, int roleid)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@stdId",id));
+            sqlParameters.Add(new SqlParameter("@roleId", roleid));
+            bool deleted = db.execInsertProc("spDeleteUser ", sqlParameters);
+            return deleted;
+        }
 
         /// <summary>
         /// Get All Teachers

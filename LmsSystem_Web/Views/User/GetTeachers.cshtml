@@ -22,18 +22,7 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JoinedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartmentId)
-            </th>
+            
             <th>
                 Options
             </th>
@@ -52,22 +41,11 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
 
+               
                 <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JoinedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoleId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartmentId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.Id, roleId = item.RoleId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Details", "UserDetails", new { id = item.Id,roleid=item.RoleId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id, roleid = item.RoleId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

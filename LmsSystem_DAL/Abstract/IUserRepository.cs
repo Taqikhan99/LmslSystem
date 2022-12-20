@@ -16,14 +16,14 @@ namespace LmsSystem_DAL.Abstract
 
         bool AddClass(Class c);
 
-        UserDetails GetStudentDetails(int id);
+        UserDetails GetUserDetails(int id,int roleid);
 
-        bool UpdateStudent(User user);
+        bool UpdateUser(User user);
         //bool UpdateTeacher(User user);
-        //bool DeleteUser(User user);
+        bool DeleteUser(int id,int roleid);
         List<User> GetStudents();
 
-        User GetStudentById(int id);
+        User GetUserByIdRole(int id, int roleId);
         //User GetTeacherById(int id);
 
         List<User> GetTeachers();

@@ -1,0 +1,169 @@
+﻿@model LmsSystem_DAL.Entities.User
+
+
+
+<div class="form-container p-3 ">
+    @if (ViewBag.roleid == 3)
+    {
+        <h2 class="text-light text-center">Edit Student</h2>
+        <div class="text-center">
+            <img src="~/Content/images/icons8-user-100.png" />
+        </div>
+    }
+    @if (ViewBag.roleid == 2)
+    {
+        <h2 class="text-light text-center">Edit Teacher</h2>
+        <div class="text-center">
+            <img src="~/Content/images/teacher2.png" />
+        </div>
+    }
+
+<div class=" p-3">
+
+    @* form to create a user *@
+    <form method="post">
+
+        <div class="row">
+            @Html.HiddenFor(Model => Model.RoleId)
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userFname" name="FirstName" placeholder="Enter First Name"
+                       value="@Model.FirstName">
+
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userLname" name="LastName" placeholder="Enter Last Name"
+                       value="@Model.LastName">
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userEmail" name="Email" placeholder="Enter Email"
+                       value="@Model.Email">
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userPhone" name="Phone" placeholder="Enter Phone Number"
+                       value="@Model.Phone">
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userPass" name="Password" placeholder="Enter Password"
+                       value="@Model.Password">
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+                <select name="DepartmentId" id="depart" class="form-control"
+                        value="@Model.DepartmentId">
+                </select>
+            </div>
+
+        </div>
+
+
+        @*<div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <select name="RoleId" id="role" class="form-control">
+                    </select>
+                </div>
+            </div>*@
+
+    <div class="d-grid gap-2">
+        @if (ViewBag.roleid == 2)
+        {
+            <button type="submit" onclick="return validate()" class="btn btn-primary">Edit Teacher</button>
+        }
+        else
+        {
+            <button type="submit" onclick="return validate()" class="btn btn-primary">Edit Student</button>
+        }
+    </div>
+
+    </form>
+    <br />
+    @if (ViewBag.roleid == 2)
+    {
+        @Html.ActionLink("Back to Teachers", "GetTeachers", null, new { @class = "btn btn-warning" })
+    }
+    @if (ViewBag.roleid == 3)
+    {
+        @Html.ActionLink("Back to Students", "GetStudents", null, new { @class = "btn btn-warning" })
+    }
+</div>
+
+
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+
+
+
+
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetDepartmentsOptions",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
+                }
+                $("#depart").html(s);
+            }
+        });
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: "/User/GetRolesOptions",
+        //    data: "{}",
+        //    success: function (data) {
+        //        var s = '<option value="-1">Please Select a Role</option>';
+        //        for (var i = 0; i < data.length; i++) {
+        //            s += '<option value="' + data[i].RoleId + '">' + data[i].RoleName + '</option>';
+        //        }
+        //        $("#role").html(s);
+        //    }
+        //});
+    });
+
+
+    function validate() {
+        var fname = document.getElementById("userFname").value;
+        var lname = document.getElementById("userLname").value;
+        var email = document.getElementById("userEmail").value;
+        var phone = document.getElementById("userPhone").value;
+        var password = document.getElementById("userPass").value;
+
+
+        console.log(fname + " " + lname);
+        if (fname == '' || lname == '' || email == '' || phone == '' || password == '') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon: "error"
+            })
+            return false;
+        }
+
+    }
+
+</script>

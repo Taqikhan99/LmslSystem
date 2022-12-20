@@ -71,22 +71,23 @@ namespace LmsSystem_Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditStudent(int Id)
+        public ActionResult EditUser(int Id,int roleId)
         {
 
-            User user = _userRepo.GetStudentById(Id);
+            User user = _userRepo.GetUserByIdRole(Id,roleId);
+            ViewBag.roleid = roleId;
 
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditStudent(User user)
+        public ActionResult EditUser(User user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.UpdateStudent(user);
+                    bool success = _userRepo.UpdateUser(user);
                     if (success)
                     {
                         TempData["message"] = "Student Record Updated";
@@ -105,11 +106,20 @@ namespace LmsSystem_Web.Controllers
 
         }
         //get student details
-        public ActionResult StudentDetails(int id)
+        public ActionResult UserDetails(int id,int roleid)
         {
             try
             {
-                UserDetails user = _userRepo.GetStudentDetails(id);
+                UserDetails user = _userRepo.GetUserDetails(id,roleid);
+
+                if (roleid == 2)
+                {
+                    ViewBag.roletype = "teacher";
+                }
+                if (roleid == 3)
+                {
+                    ViewBag.roletype = "student";
+                }
 
                 return View(user);
             }
@@ -121,8 +131,29 @@ namespace LmsSystem_Web.Controllers
             }
         }
 
+        //delete student
+        public ActionResult DeleteUser(int id,int roleid)
+        {
+            try
+            {
+                // TODO: Add delete logic here
 
+                bool stdDeleted = _userRepo.DeleteUser(id,roleid);
+                if (stdDeleted)
+                {
+                    TempData["message"] = "Student Deleted Success!";
 
+                }
+
+                return RedirectToAction("Index");
+
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
         //================================================
         //================================================
 
