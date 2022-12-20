@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "CreateDepartment";
+}
+
+<h2>CreateDepartment</h2>
+
+<div class="form-container p-3 ">
+
+    <h2 class="text-light text-center">Create Student</h2>
+    <div class="text-center">
+        <img src="~/Content/images/icons8-user-100.png" />
+    </div>
+
+    <div class=" p-3">
+
+        @* form to create a depart *@
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <input type="text" class="form-control" id="dname" name="DepartmentName" placeholder="Enter Depart Name">
+
+                </div>
+
+                <div class="col-md-6 mb-4">
+
+                    <input type="text" onfocus="(this.type='date')" class="form-control" id="sdate" name="StartDate" placeholder="Enter Dep start date">
+                </div>
+
+
+            </div>
+            <br />
+            <div class="d-grid gap-2">
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Department</button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+
+    function validate() {
+        var dname = document.getElementById("dname").value;
+        var sdate = document.getElementById("sdate").value;
+        
+
+        console.log(dname + " " + sdate);
+        if (dname == '' || sdate=='') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon: "error"
+            })
+            return false;
+        }
+
+    }
+
+
+    </script>

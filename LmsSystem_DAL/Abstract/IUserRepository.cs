@@ -14,6 +14,8 @@ namespace LmsSystem_DAL.Abstract
         bool AddProgram(Programs p);
         bool AddCourse(Course course);
 
+        bool AddDepartment(Department d);
+
         bool AddClass(Class c);
 
         UserDetails GetUserDetails(int id,int roleid);

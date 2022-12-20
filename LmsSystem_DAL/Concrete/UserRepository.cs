@@ -491,6 +491,17 @@ namespace LmsSystem_DAL.Concrete
             return departments;
         }
 
+        public bool AddDepartment(Department d)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@Departname", d.DepartmentName));
+            sqlParameters.Add(new SqlParameter("@StartDate", d.StartDate));
+
+            bool added = db.execInsertProc("spAddDepart", sqlParameters);
+
+            return added;
+        }
+
 
     }
 }

@@ -159,6 +159,7 @@
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\User\UserDetails.cshtml" />
     <Content Include="Views\User\GetDepartments.cshtml" />
+    <Content Include="Views\User\CreateDepartment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

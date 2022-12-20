@@ -11,6 +11,7 @@ namespace LmsSystem_DAL.Entities
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
 
+        public Nullable<DateTime> StartDate { get; set; }
         public string StartYear { get; set; }
         public int StudentsEnrolled { get; set; }
 

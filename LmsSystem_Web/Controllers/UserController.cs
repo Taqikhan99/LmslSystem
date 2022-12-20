@@ -364,5 +364,35 @@ namespace LmsSystem_Web.Controllers
             return View(departments);
         }
 
+        //create department
+        public ActionResult CreateDepartment()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateDepartment(Department department)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = _userRepo.AddDepartment(department);
+                    if (success)
+                    {
+                        TempData["message"] = "New Department Added";
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
     }
 }
