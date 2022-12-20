@@ -227,6 +227,35 @@ namespace LmsSystem_DAL.Concrete
         }
 
 
+
+        public UserDetails GetStudentDetails(int id)
+        {
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@stdId", id));
+
+            UserDetails user = new UserDetails();
+
+            DataTable dt = db.execGetProc("spGetStdDetails", sqlParameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow r = dt.Rows[0];
+                
+                user.FirstName = r["FirstName"].ToString();
+                user.LastName = r["LastName"].ToString();
+                user.Email = r["Email"].ToString();
+                user.Phone = r["Phone"].ToString();
+                user.JoinedDate = Convert.ToDateTime(r["JoinedDate"]);
+                user.DepartName = r["DepartName"].ToString();
+                user.ProgramName = r["ProgramName"].ToString();
+            }
+            return user;
+
+
+        }
+
+
         //update Student
         public bool UpdateStudent(User user)
         {

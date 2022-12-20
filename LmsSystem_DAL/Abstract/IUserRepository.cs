@@ -16,6 +16,7 @@ namespace LmsSystem_DAL.Abstract
 
         bool AddClass(Class c);
 
+        UserDetails GetStudentDetails(int id);
 
         bool UpdateStudent(User user);
         //bool UpdateTeacher(User user);

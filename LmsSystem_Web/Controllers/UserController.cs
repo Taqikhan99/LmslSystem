@@ -104,6 +104,22 @@ namespace LmsSystem_Web.Controllers
             }
 
         }
+        //get student details
+        public ActionResult StudentDetails(int id)
+        {
+            try
+            {
+                UserDetails user = _userRepo.GetStudentDetails(id);
+
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return View();
+
+            }
+        }
 
 
 
