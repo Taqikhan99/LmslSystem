@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LmsSystem_DAL.Entities.Department>
+@{
+    ViewBag.Title = "GetDepartments";
+}
+
+<h2>GetDepartments</h2>
+
+<h2>@Html.ActionLink("Create Department", "CreateDepartment", null, new { @class = "btn btn-success" }) </h2>
+<br />
+<h3 class="text-center text-light">Departments List</h3>
+<br />
+
+<div class="table-responsive mb-5">
+    <table class="table table-bordered" style="color:white; overflow-x:scroll;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentsEnrolled)
+            </th>
+
+
+            <th>
+                Options
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentsEnrolled)
+                </td>
+
+
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.DepartmentId }, new { @class = "btn btn-primary" })
+                    
+                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.DepartmentId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure to delete?');" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<script src="~/Scripts/jquery-3.4.0.min.js"></script>
+<script>
+
+
+
+    $(function () {
+        var message1 = '@ViewBag.smessage';
+        console.log("Hello")
+        console.log(message1)
+        if (message1 != '') {
+            swal({
+                title: "Success",
+                text: message1,
+                icon:"success"
+                })
+        }
+
+    })
+
+</script>

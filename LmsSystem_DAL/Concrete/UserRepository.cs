@@ -466,5 +466,31 @@ namespace LmsSystem_DAL.Concrete
 
             throw new NotImplementedException();
         }
+
+
+        ///=================================///
+        ///Department Related
+        /// ===
+        public List<Department> GetDepartments()
+        {
+            List<Department> departments = new List<Department>();
+            DataTable dt = db.execGetProc("spGetDepartments");
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                departments.Add(new Department
+                {
+                    DepartmentId = Convert.ToInt32(dr["DepartmentId"]),
+                    DepartmentName = dr["DepartName"].ToString(),
+                    StartYear = dr["StartYear"].ToString(),
+                    StudentsEnrolled = Convert.ToInt32(dr["StudentsEnrolled"])
+
+                });
+            }
+
+            return departments;
+        }
+
+
     }
 }

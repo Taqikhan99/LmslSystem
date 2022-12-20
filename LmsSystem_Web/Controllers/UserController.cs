@@ -202,12 +202,14 @@ namespace LmsSystem_Web.Controllers
 
 
         //Course Related Work
+        [Authorize(Roles = "Admin")]
         public ActionResult CourseRelated()
         {
             return View();
         }
 
         //get courses
+        [Authorize(Roles = "Admin")]
         public ActionResult GetCourses()
         {
             //take all courses from userreo.getallcourses
@@ -225,6 +227,7 @@ namespace LmsSystem_Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateProgram(Programs p)
         {
             if (ModelState.IsValid)
@@ -244,7 +247,7 @@ namespace LmsSystem_Web.Controllers
 
 
         //get program
-        
+        [Authorize(Roles = "Admin")]
         public ActionResult GetPrograms()
         {
             List<Programs> progs = _userRepo.GetAllPrograms();
@@ -352,6 +355,14 @@ namespace LmsSystem_Web.Controllers
             return Json(progs, JsonRequestBehavior.AllowGet);
         }
 
+        //==========================================
+
+        // Get Departments
+        public ActionResult GetDepartments()
+        {
+            List<Department> departments = _userRepo.GetDepartments();
+            return View(departments);
+        }
 
     }
 }

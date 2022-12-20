@@ -36,5 +36,7 @@ namespace LmsSystem_DAL.Abstract
         List<Roles> getRolesOptions();
 
         List<Class> GetAllClasses();
+
+        List<Department> GetDepartments();
     }
 }
