@@ -46,7 +46,7 @@
             <form method="post" >
                 <div class="mb-3">
                     <label for="userEmail" class="form-label">User Email</label>
-                    <input type="text" class="form-control" id="userEmail" name="Email" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="userEmail" name="Email" >
 
                 </div>
                 <div class="mb-3">
@@ -56,7 +56,7 @@
                 <br />
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" onclick="return validate()" class="btn btn-primary">Login</button>
 
                 </div>
                
@@ -67,3 +67,24 @@
     </div>
 </body>
 </html>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+    function validate() {
+        
+        var dname = document.getElementById("userEmail").value;
+        var sdate = document.getElementById("userPass").value;
+        
+
+        console.log(dname + " " + sdate);
+        if (dname == '' || sdate == '') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon: "error"
+            })
+            return false;
+        }
+
+    }
+</script>

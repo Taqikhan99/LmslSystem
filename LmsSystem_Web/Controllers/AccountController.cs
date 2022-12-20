@@ -27,58 +27,67 @@ namespace LmsSystem_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserVerify user) 
+        public ActionResult Login(UserVerify user)
         {
-        
-            if(ModelState.IsValid)
+            try
             {
-                SqlConnection con= Db.GetConnection();
-                SqlCommand cmd = new SqlCommand("spVerifyUser", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@userEmail", user.Email);
-                cmd.Parameters.AddWithValue("@userPassword", user.Password);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
-                con.Open();
-                adapter.Fill(dt);
-                con.Close();
-
-                bool loginSuccess = dt.Rows.Count > 0;
-
-                if(loginSuccess)
+                if (ModelState.IsValid)
                 {
-                    //DataRow row = dt.Rows[0];
-                    //string userEmail = row["Email"].ToString();
-                    //string userRole = row["RoleId"].ToString();
+                    SqlConnection con = Db.GetConnection();
+                    SqlCommand cmd = new SqlCommand("spVerifyUser", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@userEmail", user.Email);
+                    cmd.Parameters.AddWithValue("@userPassword", user.Password);
 
-                    //saving in session
-                    //setting auth cookie
-                    FormsAuthentication.SetAuthCookie(user.Email, false);
-                    
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+
+                    con.Open();
+                    adapter.Fill(dt);
+                    con.Close();
+
+                    bool loginSuccess = dt.Rows.Count > 0;
+
+                    if (loginSuccess)
+                    {
+                        //DataRow row = dt.Rows[0];
+                        //string userEmail = row["Email"].ToString();
+                        //string userRole = row["RoleId"].ToString();
+
+                        //saving in session
+                        //setting auth cookie
+                        FormsAuthentication.SetAuthCookie(user.Email, false);
 
 
-                    return RedirectToAction("Index", "User");
+
+                        return RedirectToAction("Index", "User");
+
+                    }
+
 
                 }
-                
-                
-
+                return View();
             }
-            ModelState.AddModelError("", "Invalid email or password!");
-            return View();
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return View();
+            }
+            //    ModelState.AddModelError("", "Invalid email or password!");
+            //    return View();
+            //}
         }
 
-        //Logout
-        public ActionResult Logout()
-        {
-            //logout using form authentication
+            //Logout
+            public ActionResult Logout()
+            {
+                //logout using form authentication
 
-            FormsAuthentication.SignOut();
+                FormsAuthentication.SignOut();
 
-            return RedirectToAction("Login");
+                return RedirectToAction("Login");
+            }
+
         }
-
-    }
-}
+    } 
