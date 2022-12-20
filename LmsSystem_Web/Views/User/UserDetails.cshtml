@@ -3,14 +3,20 @@
     ViewBag.Title = "StudentDetails";
 }
 <style>
-    .stdinfo{
-        border:2px solid white;
-       background-color:#5f5858;
+    .stdinfo {
+        border: 2px solid white;
+        background-color: #5f5858;
     }
 </style>
 
-
-<h1 class="text-light text-center">StudentDetails</h1>
+@if (ViewBag.roletype == "student")
+{
+    <h1 class="text-light text-center">StudentDetails</h1>
+}
+else
+{
+    <h1 class="text-light text-center">TeacherDetails</h1>
+}
 <div class="container  p-3 mt-5 text-light">
 
     <div class="row p-4">

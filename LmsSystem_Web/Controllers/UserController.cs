@@ -141,8 +141,10 @@ namespace LmsSystem_Web.Controllers
                 bool stdDeleted = _userRepo.DeleteUser(id,roleid);
                 if (stdDeleted)
                 {
-                    TempData["message"] = "Student Deleted Success!";
-
+                    if(roleid==3)
+                        TempData["message"] = "Student Deleted Success!";
+                    else
+                        TempData["message"] = "Teacher Deleted Success!";
                 }
 
                 return RedirectToAction("Index");

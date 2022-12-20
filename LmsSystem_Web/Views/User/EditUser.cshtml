@@ -24,7 +24,7 @@
     <form method="post">
 
         <div class="row">
-            @Html.HiddenFor(Model => Model.RoleId)
+            
             <div class="col-md-6 mb-4">
 
                 <input type="text" class="form-control" id="userFname" name="FirstName" placeholder="Enter First Name"
@@ -152,10 +152,11 @@
         var email = document.getElementById("userEmail").value;
         var phone = document.getElementById("userPhone").value;
         var password = document.getElementById("userPass").value;
+        var department =document.getElementById("depart").value;
 
-
+        console.log("Depart: "+department);
         console.log(fname + " " + lname);
-        if (fname == '' || lname == '' || email == '' || phone == '' || password == '') {
+        if (fname == '' || lname == '' || email == '' || phone == '' || password == ''||department==-1) {
             swal({
                 title: "Error",
                 text: "Please fill the fields first",
