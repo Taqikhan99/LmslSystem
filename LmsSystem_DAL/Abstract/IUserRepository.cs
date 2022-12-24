@@ -9,8 +9,8 @@ namespace LmsSystem_DAL.Abstract
 {
     public interface IUserRepository
     {
-        bool AddStudent(User user);
-        bool AddTeacher(User user);
+        bool AddStudent(Student user);
+        bool AddTeacher(Teacher user);
         bool AddProgram(Programs p);
         bool AddCourse(Course course);
 
@@ -18,17 +18,22 @@ namespace LmsSystem_DAL.Abstract
 
         bool AddClass(Class c);
 
-        UserDetails GetUserDetails(int id,int roleid);
+        Student GetStudentById(int id);
 
-        bool UpdateUser(User user);
+        Teacher GetTeacherById(int id);
+        Teacher GetTeacherDetails(int id);
+
+        Student GetStudentDetails(int id);
+
+        bool UpdateStudent(Student user);
         //bool UpdateTeacher(User user);
         bool DeleteUser(int id,int roleid);
-        List<User> GetStudents();
+        List<Student> GetStudents();
 
         User GetUserByIdRole(int id, int roleId);
         //User GetTeacherById(int id);
 
-        List<User> GetTeachers();
+        List<Teacher> GetTeachers();
         List<Department> getDepartmentOptions();
         List<UsersByDepart> GetStudentsByDepart(int id);
         List<Programs> getProgramsOptions();

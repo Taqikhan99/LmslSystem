@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "GetTeacherDetails";
+}
+
+@model LmsSystem_DAL.Entities.Teacher
+
+<style>
+    .stdinfo {
+        border: 2px solid white;
+        background-color: #5f5858;
+    }
+</style>
+
+
+
+<h1 class="text-light text-center">Teacher Details</h1>
+
+
+<div class="container  p-3 mt-5 text-light">
+
+    <div class="row p-4">
+        <div class="col-md-4">
+            <img src="~/Content/images/teacher.png" />
+        </div>
+        <div class="col-md-8 stdinfo p-3">
+
+             
+
+            <h3> Name: @Model.FirstName @Model.LastName</h3>
+            <h3> Email: @Model.Email</h3>
+            <h3> Phone: @Model.Phone</h3>
+            <h3> Address: @Model.Address</h3>
+            <h3> Username: @Model.Username</h3>
+            <h3> Salary: @Model.Salary</h3>
+            <h3> Admision Date: @String.Format("{0:d/M/yyyy}", Model.Joineddate) </h3>
+            <h3> Department: @Model.DepartName</h3>
+            <h3> Designation: @Model.Designation</h3>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

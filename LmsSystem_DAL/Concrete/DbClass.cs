@@ -21,8 +21,7 @@ namespace LmsSystem_DAL.Concrete
         //procedure call for insert
         public bool execInsertProc(string procname,List<SqlParameter> sqlParameters)
         {
-            try
-            {
+            
                 int i = 0;
 
 
@@ -47,8 +46,8 @@ namespace LmsSystem_DAL.Concrete
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex) { return false; }
+            
+           
 
 
         }

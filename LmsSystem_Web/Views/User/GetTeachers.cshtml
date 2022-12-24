@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LmsSystem_DAL.Entities.User>
+﻿@model IEnumerable<LmsSystem_DAL.Entities.Teacher>
 
 @{
     ViewBag.Title = "GetTeachers";
@@ -21,13 +21,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Joineddate)
+            </th>
 
-            
             <th>
                 Options
             </th>
         </tr>
-
+        @* Designation, Username, Joineddate *@
         @foreach (var item in Model)
         {
             <tr>
@@ -40,12 +48,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-
-               
                 <td>
-                    @Html.ActionLink("Edit", "EditUser", new { id = item.Id, roleId = item.RoleId }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "UserDetails", new { id = item.Id,roleid=item.RoleId }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.Id, roleid = item.RoleId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure to delete?');" })
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Joineddate)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "EditTeacher", new { id = item.Id}, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Details", "GetTeacherDetails", new { id = item.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.Id}, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure to delete?');" })
                 </td>
             </tr>
         }

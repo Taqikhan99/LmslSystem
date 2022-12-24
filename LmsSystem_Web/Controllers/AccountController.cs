@@ -89,5 +89,15 @@ namespace LmsSystem_Web.Controllers
                 return RedirectToAction("Login");
             }
 
+
+
+
+            //ErrorPage
+            public ActionResult ErrorPage()
+            {
+            ViewBag.ErrorMess = TempData["message"];
+                return View();
+            }
+
         }
     } 

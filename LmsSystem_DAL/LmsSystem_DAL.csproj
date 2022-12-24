@@ -51,6 +51,8 @@
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Programs.cs" />
     <Compile Include="Entities\Roles.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\Teacher.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserDetails.cs" />
     <Compile Include="Entities\UsersByDepart.cs" />

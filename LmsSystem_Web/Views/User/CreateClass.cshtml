@@ -3,5 +3,97 @@
     ViewBag.Title = "CreateClass";
 }
 
-<h2>CreateClass</h2>
+<div class="form-container p-3 ">
+
+    <h2 class="text-light text-center">Create Class</h2>
+    <div class="text-center">
+        <img src="~/Content/images/online-course.png" />
+    </div>
+
+    <div class=" p-3">
+
+        @* form to create a user *@
+        <form method="post">
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="DepartId" id="depart" class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-6 mb-4">
+
+                    <select name="ProgramId" id="program" class="form-control">
+                    </select>
+                </div>
+
+            </div>
+            <div class="row" style="display:none">
+                
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="ProgramId" id="program" class="form-control">
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="d-grid gap-2">
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Course</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.4.0.js"></script>
+<script>
+    function validate() {
+        var cname = document.getElementById("coursename").value;
+
+        if (cname == '') {
+            swal({
+                title: "Error",
+                text: "Please fill the fields first",
+                icon: "error"
+            })
+            return false;
+        }
+    }
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetProgramOptions",
+            data: "{}",
+            success: function (data) {
+                console.log(data)
+                var s = '<option value="-1" disabled selected>Please Select a Program</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].ProgramId + '">' + data[i].ProgramName + '</option>';
+                }
+                $("#program").html(s);
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "/User/GetDepartmentsOptions",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1 disabled selected">Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
+                }
+                $("#depart").html(s);
+            }
+        });
+    })
+    </script>
 

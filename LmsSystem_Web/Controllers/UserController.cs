@@ -40,19 +40,29 @@ namespace LmsSystem_Web.Controllers
         //create user Post req
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateStudent(User user)
+        public ActionResult CreateStudent(Student student)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool success = _userRepo.AddStudent(user);
-                if (success)
+                if (ModelState.IsValid)
                 {
-                    TempData["message"] = "New Student Added";
-                    return RedirectToAction("Index");
-                }
-                else
-                    TempData["emessage"] = "Something Wrong!";
 
+                    bool success = _userRepo.AddStudent(student);
+
+                    if (success)
+                    {
+                        TempData["message"] = "New Student Added";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        TempData["emessage"] = "Something Wrong!";
+
+
+                }
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
             }
 
             return View();
@@ -64,30 +74,38 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetStudents()
         {
 
-            List<User> users = _userRepo.GetStudents();
+            List<Student> users = _userRepo.GetStudents();
             ViewBag.smessage = TempData["message"];
 
             return View(users);
         }
 
+        
+
         [HttpGet]
-        public ActionResult EditUser(int Id,int roleId)
+        public ActionResult EditStudent(int Id)
         {
+            try
+            {
+                Student std = _userRepo.GetStudentById(Id);
 
-            User user = _userRepo.GetUserByIdRole(Id,roleId);
-            ViewBag.roleid = roleId;
-
-            return View(user);
+                return View(std);
+            }
+            catch(Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage","Account");
+            }
         }
 
         [HttpPost]
-        public ActionResult EditUser(User user)
+        public ActionResult EditStudent(Student user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.UpdateUser(user);
+                    bool success = _userRepo.UpdateStudent(user);
                     if (success)
                     {
                         TempData["message"] = "Student Record Updated";
@@ -97,37 +115,126 @@ namespace LmsSystem_Web.Controllers
 
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["message"] = ex.Message;
-                return View();
+                return RedirectToAction("ErrorPage", "Account");
 
             }
 
         }
-        //get student details
-        public ActionResult UserDetails(int id,int roleid)
+        ////get student details
+        public ActionResult StudentDetails(int id)
         {
             try
             {
-                UserDetails user = _userRepo.GetUserDetails(id,roleid);
+                Student std = _userRepo.GetStudentDetails(id);
 
-                if (roleid == 2)
-                {
-                    ViewBag.roletype = "teacher";
-                }
-                if (roleid == 3)
-                {
-                    ViewBag.roletype = "student";
-                }
+                return View(std);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
 
-                return View(user);
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateTeacher()
+        {
+            return View();
+        }
+
+        //create user Post req
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateTeacher(Teacher teacher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    bool success = _userRepo.AddTeacher(teacher);
+
+                    if (success)
+                    {
+                        TempData["message"] = "New Teacher Added";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        TempData["emessage"] = "Something Wrong!";
+
+
+                }
             }
             catch (Exception ex)
             {
                 TempData["message"] = ex.Message;
+            }
+
+            return View();
+        }
+
+
+        //edit teacher
+        [Authorize(Roles ="Admin")]
+        public ActionResult EditTeacher(int id)
+        {
+            try
+            {
+                Teacher teacher = _userRepo.GetTeacherById(id);
+
+                return View(teacher);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+
+            
+        }
+
+        // Edit Teacher Post
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
+        public ActionResult EditTeacher(Teacher teacher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return RedirectToAction("Index");
+                }
                 return View();
 
+            }
+            catch(Exception ex)
+            {
+                TempData["message"]= ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+
+        }
+
+
+        //Get TeacherDetail
+
+        [Authorize(Roles ="Admin")]
+        public ActionResult GetTeacherDetails(int id)
+        {
+            try
+            {
+                Teacher teacher = _userRepo.GetTeacherDetails(id);
+
+                return View(teacher);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
             }
         }
 
@@ -193,7 +300,7 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetTeachers()
         {
 
-            List<User> users = _userRepo.GetTeachers();
+            List<Teacher> users = _userRepo.GetTeachers();
 
             return View(users);
         }
@@ -296,35 +403,35 @@ namespace LmsSystem_Web.Controllers
         }
 
         //Get and create Teachers
-        public ActionResult CreateTeacher()
-        {
-            return View();
-        }
+        //public ActionResult CreateTeacher()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult CreateTeacher(User u)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    bool success = _userRepo.AddTeacher(u);
-                    if (success)
-                    {
-                        TempData["message"] = "New Teacher Added";
-                        return RedirectToAction("Index");
-                    }
-                }
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.smessage = ex.Message;
-                return View();
-            }
+        //[HttpPost]
+        //public ActionResult CreateTeacher(Teacher t)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            bool success = _userRepo.AddTeacher(u);
+        //            if (success)
+        //            {
+        //                TempData["message"] = "New Teacher Added";
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.smessage = ex.Message;
+        //        return View();
+        //    }
 
             
-        }
+        //}
 
 
 
