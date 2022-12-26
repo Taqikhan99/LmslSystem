@@ -148,31 +148,33 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
-        public List<Programs> getProgramsOptions()
+        public List<Programs> getProgramsOptions(int id =0)
         {
-            connection();
-            //make departmnt list
             List<Programs> programs = new List<Programs>();
+            List<SqlParameter> parameters = new List<SqlParameter>();
 
-            SqlCommand cmd = new SqlCommand("spGetPrograms", con);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                programs.Add(new Programs
-                {
-                    ProgramId = Convert.ToInt32(row["ProgramId"]),
-                    ProgramName = row["ProgramName"].ToString(),
-                    DepartId= Convert.ToInt32(row["DepartId"])
-                });
+            DataTable dt;
+            if (id > 0)
+            {   parameters.Add(new SqlParameter("@depId", id));
+                dt = db.execGetProc("spGetProgramOptions", parameters);
             }
+            else
+            {
+                dt = db.execGetProc("spGetPrograms");
+            }
+            if (dt.Rows.Count > 0) {
+                foreach (DataRow r in dt.Rows)
+                {
+                    programs.Add(new Programs
+                    {
+                        ProgramId = Convert.ToInt32(r["ProgramId"]),
+                        ProgramName = r["ProgramName"].ToString(),
+                        DepartId = Convert.ToInt32(r["DepartId"])
+                    });
+
+                }
+            }
+
 
             return programs;
         }
@@ -603,3 +605,34 @@ namespace LmsSystem_DAL.Concrete
 
     }
 }
+//connection();
+////make departmnt list
+//SqlCommand cmd = new SqlCommand("spGetPrograms", con);
+//List<Programs> programs = new List<Programs>();
+
+
+//if (id > 0)
+//{
+//    cmd = new SqlCommand("spGetProgramOptions", con);
+//    SqlParameter p = new SqlParameter("@depId", id);
+//    cmd.Parameters.Add(p);
+//}
+
+
+//cmd.CommandType = CommandType.StoredProcedure;
+
+//SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+//DataTable dt = new DataTable();
+//con.Open();
+//adapter.Fill(dt);
+//con.Close();
+
+//foreach (DataRow row in dt.Rows)
+//{
+//    programs.Add(new Programs
+//    {
+//        ProgramId = Convert.ToInt32(row["ProgramId"]),
+//        ProgramName = row["ProgramName"].ToString(),
+//        DepartId = Convert.ToInt32(row["DepartId"])
+//    });
+//}

@@ -18,22 +18,22 @@
 
                 <div class="col-md-6 mb-4">
 
-                    <select name="DepartId" id="depart" class="form-control">
+                    <select onchange="getDeptValue();" name="DepartId" id="depart" class="form-control">
                     </select>
                 </div>
                 <div class="col-md-6 mb-4">
 
-                    <select name="ProgramId" id="program" class="form-control">
+                    <select name="ProgramId" onchange="getProgValue()" id="program" class="form-control">
                     </select>
                 </div>
 
             </div>
-            <div class="row" style="display:none">
+            <div class="row" id="row2" style="display:none">
                 
 
                 <div class="col-md-6 mb-4">
 
-                    <select name="ProgramId" id="program" class="form-control">
+                    <select  name="ProgramId" id="program" class="form-control">
                     </select>
                 </div>
 
@@ -68,11 +68,53 @@
             return false;
         }
     }
+
+    
+    
+
+
     $(document).ready(function () {
+      //$.ajax({
+      //      type: "GET",
+      //      url: "/User/GetProgramOptions",
+      //      data: "{}",
+      //      success: function (data) {
+      //          console.log(data)
+      //          var s = '<option value="-1" disabled selected>Please Select a Program</option>';
+      //          for (var i = 0; i < data.length; i++) {
+      //              s += '<option value="' + data[i].ProgramId + '">' + data[i].ProgramName + '</option>';
+      //          }
+      //          $("#program").html(s);
+      //      }
+      //  });  
+        $.ajax({
+            type: "GET",
+            url: "/User/GetDepartmentsOptions",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1" disabled selected>Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
+                }
+                $("#depart").html(s);
+            }
+        });
+    })
+
+    function getDeptValue() {
+        var dpVal = document.getElementById("depart").value;
+        alert(dpVal);
+        populateProgramOptions(dpVal);
+
+    }
+
+
+    //function to get program value based on depart id
+    function populateProgramOptions(id) {
         $.ajax({
             type: "GET",
             url: "/User/GetProgramOptions",
-            data: "{}",
+            data: {id},
             success: function (data) {
                 console.log(data)
                 var s = '<option value="-1" disabled selected>Please Select a Program</option>';
@@ -82,18 +124,17 @@
                 $("#program").html(s);
             }
         });
-        $.ajax({
-            type: "GET",
-            url: "/User/GetDepartmentsOptions",
-            data: "{}",
-            success: function (data) {
-                var s = '<option value="-1 disabled selected">Please Select a Department</option>';
-                for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].DepartmentId + '">' + data[i].DepartmentName + '</option>';
-                }
-                $("#depart").html(s);
-            }
-        });
-    })
+
+    }
+
+
+    function getProgValue() {
+        var prVal = document.getElementById("program").value;
+        var secondRow = document.getElementById("row2");
+        alert(prVal);
+        secondRow.style.display = 'block';
+    }
+
+
     </script>
 

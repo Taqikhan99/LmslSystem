@@ -448,16 +448,23 @@ namespace LmsSystem_Web.Controllers
         //get roles
         public ActionResult GetRolesOptions()
         {
-            List<Roles> roles = _userRepo.getRolesOptions();
+            try
+            {
+                List<Roles> roles = _userRepo.getRolesOptions();
 
-            return Json(roles, JsonRequestBehavior.AllowGet);
-
+                return Json(roles, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
         }
 
         //get programs
-        public ActionResult GetProgramOptions()
+        public ActionResult GetProgramOptions(int id)
         {
-            List<Programs> progs = _userRepo.getProgramsOptions();
+            List<Programs> progs = _userRepo.getProgramsOptions(id);
 
             return Json(progs, JsonRequestBehavior.AllowGet);
         }
