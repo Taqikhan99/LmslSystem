@@ -27,7 +27,7 @@ namespace LmsSystem_DAL.Abstract
 
         bool UpdateStudent(Student user);
         //bool UpdateTeacher(User user);
-        bool DeleteUser(int id,int roleid);
+       
         List<Student> GetStudents();
 
         User GetUserByIdRole(int id, int roleId);
@@ -48,7 +48,7 @@ namespace LmsSystem_DAL.Abstract
 
         List<Department> GetDepartments();
 
-        List<Classroom> GetClassrooms();
-        List<Teacher> GetTeacherOptions();
+        List<Classroom> GetClassrooms(string day, int timeid);
+        List<Teacher> GetTeacherOptions(string day);
     }
 }

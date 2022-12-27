@@ -17,7 +17,8 @@ namespace LmsSystem_DAL.Entities
         public string ClassDay { get; set; }
 
         public int SlotId { get; set; }
-
+        public string Room { get; set; }
+        public string CourseName { get; set; }
         public string ClassTime { get; set; }
         public int ClassRoomId { get; set; }
 

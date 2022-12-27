@@ -237,12 +237,12 @@ namespace LmsSystem_DAL.Concrete
 
 
         //get classroom options based on condition where day and time slots do not match.
-        public List<Classroom> GetClassrooms()
+        public List<Classroom> GetClassrooms(string day,int timeid)
         {
             List<Classroom> classrooms = new List<Classroom>();
 
-            DataTable dt = db.execQuery("select cr.RoomId,cr.RoomName\r\nfrom ClassRoomTb cr\r\nwhere cr.RoomId not " +
-                                        "in(\r\n\r\n\tSelect c.RoomId from ClassTb c \r\n)");
+            DataTable dt = db.execQuery($@"select cr.RoomId,cr.RoomName from ClassRoomTb cr 
+                where cr.RoomId not in( Select c.RoomId from ClassTb c where ClassDay= '{day}' and SlotId = {timeid})");
 
             if (dt.Rows.Count > 0)
             {
@@ -259,12 +259,12 @@ namespace LmsSystem_DAL.Concrete
             return classrooms;
         }
 
-        public List<Teacher> GetTeacherOptions()
+        public List<Teacher> GetTeacherOptions(string day)
         {
             List<Teacher> teachers= new List<Teacher>();
 
-            DataTable dt = db.execQuery("select u.Id,t.FirstName+' '+t.LastName as TeacherName from UserTb u inner join TeacherTb t" +
-                                        " on u.Id=t.TeacherId where u.Id not in( Select  TeacherId from ClassTb) ");
+            DataTable dt = db.execQuery($"select u.Id,t.FirstName+' '+t.LastName as TeacherName from UserTb u inner join TeacherTb t" +
+                      $" on u.Id=t.TeacherId where u.Id not in( Select  TeacherId from ClassTb where ClassDay='{day}') ");
             if (dt.Rows.Count > 0)
             {
                 foreach(DataRow dr in dt.Rows)
@@ -280,11 +280,7 @@ namespace LmsSystem_DAL.Concrete
         }
 
 
-        //public bool DeleteUser(User user)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+        
         public List<Student> GetStudents()
         {
             
@@ -639,9 +635,18 @@ namespace LmsSystem_DAL.Concrete
         }
         //add and get classes
 
-        public bool AddClass(Class c)
+        public bool AddClass(Class cl)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@teacherId", cl.TeacherId));
+            sqlParameters.Add(new SqlParameter("@courseId", cl.CourseId));
+            sqlParameters.Add(new SqlParameter("@classDay", cl.ClassDay));
+            sqlParameters.Add(new SqlParameter("@roomId", cl.ClassRoomId));
+            sqlParameters.Add(new SqlParameter("@slotId", cl.SlotId));
+
+            bool added = db.execInsertProc("spAddClass", sqlParameters);
+
+            return added;
         }
 
         public List<Class> GetAllClasses()
@@ -654,13 +659,13 @@ namespace LmsSystem_DAL.Concrete
                 classes.Add(new Class
                 {
                     ClassId = Convert.ToInt32(dr["ClassId"]),
-                    TeacherId = Convert.ToInt32(dr["TeacherId"]),
-                    CourseId = Convert.ToInt32(dr["CourseId"]),
+                    TeacherName = dr["TeacherName"].ToString(),
+                    CourseName = dr["CourseName"].ToString(),
                     ClassDay = dr["ClassDay"].ToString(),
-                    ClassTime = Convert.ToString( dr["RoomId"]),
-                    SlotId= Convert.ToInt32(dr["SlotId"])
+                    Room = dr["RoomName"].ToString(),
+                    ClassTime = dr["Classtime"].ToString()
 
-                });
+                }) ;
             }
 
             return classes;
@@ -708,34 +713,5 @@ namespace LmsSystem_DAL.Concrete
 
     }
 }
-//connection();
-////make departmnt list
-//SqlCommand cmd = new SqlCommand("spGetPrograms", con);
-//List<Programs> programs = new List<Programs>();
 
 
-//if (id > 0)
-//{
-//    cmd = new SqlCommand("spGetProgramOptions", con);
-//    SqlParameter p = new SqlParameter("@depId", id);
-//    cmd.Parameters.Add(p);
-//}
-
-
-//cmd.CommandType = CommandType.StoredProcedure;
-
-//SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-//DataTable dt = new DataTable();
-//con.Open();
-//adapter.Fill(dt);
-//con.Close();
-
-//foreach (DataRow row in dt.Rows)
-//{
-//    programs.Add(new Programs
-//    {
-//        ProgramId = Convert.ToInt32(row["ProgramId"]),
-//        ProgramName = row["ProgramName"].ToString(),
-//        DepartId = Convert.ToInt32(row["DepartId"])
-//    });
-//}

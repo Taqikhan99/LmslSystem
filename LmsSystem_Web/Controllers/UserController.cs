@@ -241,19 +241,16 @@ namespace LmsSystem_Web.Controllers
         }
 
         //delete student
-        public ActionResult DeleteUser(int id,int roleid)
+        public ActionResult DeleteTeacher(int id)
         {
             try
             {
                 // TODO: Add delete logic here
 
-                bool stdDeleted = _userRepo.DeleteUser(id,roleid);
+                bool tDeleted = _userRepo.DelTeacher(id);
                 if (stdDeleted)
                 {
-                    if(roleid==3)
-                        TempData["message"] = "Student Deleted Success!";
-                    else
-                        TempData["message"] = "Teacher Deleted Success!";
+                        TempData["message"] = "Student Deleted Success!"; 
                 }
 
                 return RedirectToAction("Index");
@@ -497,11 +494,11 @@ namespace LmsSystem_Web.Controllers
         }
 
         //get rooms based on available time slot
-        public ActionResult GetClassRoomOptions()
+        public ActionResult GetClassRoomOptions(string day,int slotid)
         {
             try
             {
-                List<Classroom> classrooms = _userRepo.GetClassrooms();
+                List<Classroom> classrooms = _userRepo.GetClassrooms(day,slotid);
                 return Json(classrooms, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
@@ -511,11 +508,11 @@ namespace LmsSystem_Web.Controllers
             }
         }
 
-        public ActionResult GetTeacherOptions()
+        public ActionResult GetTeacherOptions(string day)
         {
             try
             {
-                List<Teacher> t = _userRepo.GetTeacherOptions();
+                List<Teacher> t = _userRepo.GetTeacherOptions(day);
                 return Json(t, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

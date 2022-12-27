@@ -16,21 +16,17 @@
         <form method="post">
             <div class="row">
 
-                <div class="col-md-4 mb-4">
+                <div class="col-md-6 mb-4">
 
                     <select onchange="getDeptValue();" name="DepartId" id="depart" class="form-control">
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-6 mb-4">
 
                     <select name="ProgramId" onchange="getProgValue()" id="program" class="form-control">
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
-
-                    <select name="TeacherId" onchange="getTeacherVal()" id="teacher" class="form-control">
-                    </select>
-                </div>
+                
 
             </div>
 
@@ -75,14 +71,14 @@
 
             </div>
             @* ---------- *@
-            @*<div class="row" id="row4" style="display:none">
+            <div class="row" id="row4" style="display:none">
 
 
                 <div class="col-md-6 mb-4">
 
-                    <select name="TeacherId" onchange="getTeacherVal()" id="timeslot" class="form-control">
+                    <select name="Teacherid" onchange="getteacherval()" id="teacher" class="form-control">
                     </select>
-                </div>*@
+                </div>
                 
 
             </div>
@@ -140,6 +136,8 @@
     ///functions to get the value of selected items from respective sleect box
 
     var thirdrow = document.getElementById("row3");
+    var fourthrow = document.getElementById("row4");
+    var dayselected;
 
     function getDeptValue() {
         var dpVal = document.getElementById("depart").value;
@@ -153,7 +151,7 @@
         var secondRow = document.getElementById("row2");
 
         secondRow.style.display = 'flex';
-        populateTeachers();
+        
         populateCourseOption(prVal);
     }
 
@@ -166,7 +164,7 @@
     }
 
     function getDaysValue() {
-        var dayselected = document.getElementById("dayselect").value;
+        dayselected = document.getElementById("dayselect").value;
         alert(dayselected);
         row3.style.display = "flex";
         populateTimeSlot();
@@ -175,13 +173,17 @@
     function getSlotVal() {
         var slotSelected = document.getElementById("timeslot").value;
         alert(slotSelected);
-        populateClassRooms();
+        alert(dayselected);
+        populateClassRooms(dayselected, slotSelected);
 
     }
 
     function getClRoomVal(){
         var roomSelected = document.getElementById("classroom").value;
         alert(roomSelected);
+        populateTeachers(dayselected);
+        fourthrow.style.display = "flex";
+
     }
 
     function getTeacherVal() {
@@ -246,11 +248,11 @@
     }
 
 
-    function populateClassRooms() {
+    function populateClassRooms(day,slotid) {
         $.ajax({
             type: "GET",
             url: "/User/GetClassRoomOptions",
-            data: {},
+            data: { day, slotid },
             success: function (data) {
                 console.log(data)
 
@@ -263,11 +265,11 @@
         });
     }
 
-    function populateTeachers() {
+    function populateTeachers(day) {
         $.ajax({
             type: "GET",
             url: "/User/GetTeacherOptions",
-            data: {},
+            data: { day },
             success: function (data) {
                 console.log(data)
 
