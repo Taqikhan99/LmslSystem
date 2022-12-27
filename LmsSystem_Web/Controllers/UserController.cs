@@ -3,7 +3,9 @@ using LmsSystem_DAL.Concrete;
 using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
@@ -461,6 +463,23 @@ namespace LmsSystem_Web.Controllers
             }
         }
 
+        //get course options
+        public ActionResult GetCourseOptions(int id)
+        {
+            try
+            {
+                List<Course> courses = _userRepo.getCourseOptions(id);
+
+                return Json(courses, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+
+
         //get programs
         public ActionResult GetProgramOptions(int id)
         {
@@ -468,6 +487,45 @@ namespace LmsSystem_Web.Controllers
 
             return Json(progs, JsonRequestBehavior.AllowGet);
         }
+
+        //get time slots
+        public ActionResult GetTimeSlots()
+        {
+            List<TimeSlot> slots=_userRepo.GetTimeSlots();
+            return Json(slots, JsonRequestBehavior.AllowGet);
+
+        }
+
+        //get rooms based on available time slot
+        public ActionResult GetClassRoomOptions()
+        {
+            try
+            {
+                List<Classroom> classrooms = _userRepo.GetClassrooms();
+                return Json(classrooms, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+
+        public ActionResult GetTeacherOptions()
+        {
+            try
+            {
+                List<Teacher> t = _userRepo.GetTeacherOptions();
+                return Json(t, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+        
+
 
         //==========================================
 

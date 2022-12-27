@@ -179,6 +179,107 @@ namespace LmsSystem_DAL.Concrete
             return programs;
         }
 
+
+        //get course options
+        public List<Course> getCourseOptions(int id = 0)
+        {
+            List<Course> courses = new List<Course>();
+            List<SqlParameter> parameters = new List<SqlParameter>();
+
+            
+            
+            parameters.Add(new SqlParameter("@progId", id));
+            DataTable dt = db.execGetProc("spGetCourseOptions", parameters);
+            
+            
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow r in dt.Rows)
+                {
+                    courses.Add(new Course
+                    {
+                        ProgramId = Convert.ToInt32(r["ProgramId"]),
+                        CourseName = r["CourseName"].ToString(),
+                        CourseId = Convert.ToInt32(r["CourseId"])
+                    });
+
+                }
+            }
+
+
+            return courses;
+        }
+
+        //get class room based on day and time slot
+
+
+
+        //get time slots
+        public List<TimeSlot> GetTimeSlots()
+        {
+            List<TimeSlot> slots = new List<TimeSlot>();
+            DataTable dt = db.execQuery("Select * from TimeSlotTb");
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow r in dt.Rows)
+                {
+                    slots.Add(new TimeSlot
+                    {
+                        Id = Convert.ToInt32(r["Id"]),
+                        StartTime = r["StartTime"].ToString(),
+                        EndTime = r["EndTime"].ToString()
+                    });
+                }
+            }
+            return slots;
+        }
+
+
+        //get classroom options based on condition where day and time slots do not match.
+        public List<Classroom> GetClassrooms()
+        {
+            List<Classroom> classrooms = new List<Classroom>();
+
+            DataTable dt = db.execQuery("select cr.RoomId,cr.RoomName\r\nfrom ClassRoomTb cr\r\nwhere cr.RoomId not " +
+                                        "in(\r\n\r\n\tSelect c.RoomId from ClassTb c \r\n)");
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow dr in dt.Rows)
+                {
+                    classrooms.Add(new Classroom
+                    {
+                        Id = Convert.ToInt32(dr["RoomId"]),
+                        RoomName = dr["RoomName"].ToString(),
+                    });
+                }
+            }
+
+            return classrooms;
+        }
+
+        public List<Teacher> GetTeacherOptions()
+        {
+            List<Teacher> teachers= new List<Teacher>();
+
+            DataTable dt = db.execQuery("select u.Id,t.FirstName+' '+t.LastName as TeacherName from UserTb u inner join TeacherTb t" +
+                                        " on u.Id=t.TeacherId where u.Id not in( Select  TeacherId from ClassTb) ");
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow dr in dt.Rows)
+                {
+                    teachers.Add(new Teacher
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        FirstName = dr["TeacherName"].ToString()
+                    });
+                }
+            }
+            return teachers;
+        }
+
+
         //public bool DeleteUser(User user)
         //{
         //    throw new NotImplementedException();
@@ -552,11 +653,13 @@ namespace LmsSystem_DAL.Concrete
             {
                 classes.Add(new Class
                 {
-                    ClassId = Convert.ToInt32(dr["ClassId "]),
-                    TeacherId = Convert.ToInt32(dr["UserId"]),
+                    ClassId = Convert.ToInt32(dr["ClassId"]),
+                    TeacherId = Convert.ToInt32(dr["TeacherId"]),
                     CourseId = Convert.ToInt32(dr["CourseId"]),
                     ClassDay = dr["ClassDay"].ToString(),
-                    ClassTime = Convert.ToDateTime( dr["ClassTime"])
+                    ClassTime = Convert.ToString( dr["RoomId"]),
+                    SlotId= Convert.ToInt32(dr["SlotId"])
+
                 });
             }
 

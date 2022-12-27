@@ -47,8 +47,6 @@ namespace LmsSystem_DAL.Concrete
                 }
                 return false;
             
-           
-
 
         }
 
@@ -81,6 +79,31 @@ namespace LmsSystem_DAL.Concrete
                 return dt;
             
             }
+
+
+        //gene func to call a sql query withpout proc
+        public DataTable execQuery(string query)
+        {
+
+            DataTable dt = new DataTable();
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                con.Open();
+                adapter.Fill(dt);
+                con.Close();
+
+
+            }
+
+            return dt;
+
+        }
+
+
+
 
         public SqlConnection GetConnection()
         { 

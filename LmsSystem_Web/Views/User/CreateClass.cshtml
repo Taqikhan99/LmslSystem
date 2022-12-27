@@ -16,32 +16,79 @@
         <form method="post">
             <div class="row">
 
-                <div class="col-md-6 mb-4">
+                <div class="col-md-4 mb-4">
 
                     <select onchange="getDeptValue();" name="DepartId" id="depart" class="form-control">
                     </select>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-4 mb-4">
 
                     <select name="ProgramId" onchange="getProgValue()" id="program" class="form-control">
                     </select>
                 </div>
+                <div class="col-md-4 mb-4">
 
-            </div>
-            <div class="row" id="row2" style="display:none">
-                
-
-                <div class="col-md-6 mb-4">
-
-                    <select  name="ProgramId" id="program" class="form-control">
+                    <select name="TeacherId" onchange="getTeacherVal()" id="teacher" class="form-control">
                     </select>
                 </div>
 
             </div>
 
+            @* ----------- *@
+            <div class="row" id="row2" style="display:none">
+
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="CourseId" onchange="getCourseValue()" id="course" class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-6 mb-4" id="daycontainer">
+
+                    <select name="ClassDay" id="dayselect" class="form-control" onchange="getDaysValue()">
+                        <option value="-1" disabled selected>Please Select a Day</option>
+                        <option>Mon</option>
+                        <option>Tue</option>
+                        <option>Wed</option>
+                        <option>Thu</option>
+                        <option>Fri</option>
+                        <option>Sat</option>
+
+                    </select>
+                </div>
+
+            </div>
+            @* ---------- *@
+            <div class="row" id="row3" style="display:none">
+
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="SlotId" onchange="getSlotVal()" id="timeslot" class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-6 mb-4" id="daycontainer">
+                    <select name="ClassRoomId" onchange="getClRoomVal()" id="classroom" class="form-control">
+                    </select>
+
+                </div>
+
+            </div>
+            @* ---------- *@
+            @*<div class="row" id="row4" style="display:none">
+
+
+                <div class="col-md-6 mb-4">
+
+                    <select name="TeacherId" onchange="getTeacherVal()" id="timeslot" class="form-control">
+                    </select>
+                </div>*@
+                
+
+            </div>
 
             <div class="d-grid gap-2">
-                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Course</button>
+                <button type="submit" onclick="return validate()" class="btn btn-primary">Create Class</button>
 
             </div>
 
@@ -74,19 +121,7 @@
 
 
     $(document).ready(function () {
-      //$.ajax({
-      //      type: "GET",
-      //      url: "/User/GetProgramOptions",
-      //      data: "{}",
-      //      success: function (data) {
-      //          console.log(data)
-      //          var s = '<option value="-1" disabled selected>Please Select a Program</option>';
-      //          for (var i = 0; i < data.length; i++) {
-      //              s += '<option value="' + data[i].ProgramId + '">' + data[i].ProgramName + '</option>';
-      //          }
-      //          $("#program").html(s);
-      //      }
-      //  });  
+       
         $.ajax({
             type: "GET",
             url: "/User/GetDepartmentsOptions",
@@ -101,12 +136,59 @@
         });
     })
 
+
+    ///functions to get the value of selected items from respective sleect box
+
+    var thirdrow = document.getElementById("row3");
+
     function getDeptValue() {
         var dpVal = document.getElementById("depart").value;
         alert(dpVal);
         populateProgramOptions(dpVal);
 
     }
+
+    function getProgValue() {
+        var prVal = document.getElementById("program").value;
+        var secondRow = document.getElementById("row2");
+
+        secondRow.style.display = 'flex';
+        populateTeachers();
+        populateCourseOption(prVal);
+    }
+
+    function getCourseValue() {
+        var crVal = document.getElementById("course").value;
+        alert(crVal);
+        var dayscontainer = document.getElementById("daycontainer");
+        dayscontainer.style.display = "block";
+
+    }
+
+    function getDaysValue() {
+        var dayselected = document.getElementById("dayselect").value;
+        alert(dayselected);
+        row3.style.display = "flex";
+        populateTimeSlot();
+    }
+
+    function getSlotVal() {
+        var slotSelected = document.getElementById("timeslot").value;
+        alert(slotSelected);
+        populateClassRooms();
+
+    }
+
+    function getClRoomVal(){
+        var roomSelected = document.getElementById("classroom").value;
+        alert(roomSelected);
+    }
+
+    function getTeacherVal() {
+
+    }
+
+    ///--------------------------------------------------------------------
 
 
     //function to get program value based on depart id
@@ -128,11 +210,74 @@
     }
 
 
-    function getProgValue() {
-        var prVal = document.getElementById("program").value;
-        var secondRow = document.getElementById("row2");
-        alert(prVal);
-        secondRow.style.display = 'block';
+    function populateCourseOption(id) {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetCourseOptions",
+            data: { id },
+            success: function (data) {
+                console.log(data)
+                var s = '<option value="-1" disabled selected>Please Select a Course</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].CourseId + '">' + data[i].CourseName + '</option>';
+                }
+                $("#course").html(s);
+            }
+        });
+
+    }
+
+    function populateTimeSlot() {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetTimeSlots",
+            data: {},
+            success: function (data) {
+                console.log(data)
+                
+                var s = '<option value="-1" disabled selected>Please Select a Time slot</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Id + '">' + data[i].StartTime + ' to ' + data[i].EndTime + '</option>';
+                }
+                $("#timeslot").html(s);
+            }
+        });
+
+    }
+
+
+    function populateClassRooms() {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetClassRoomOptions",
+            data: {},
+            success: function (data) {
+                console.log(data)
+
+                var s = '<option value="-1" disabled selected>Please Select a Room</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Id + '">' + data[i].RoomName + '</option>';
+                }
+                $("#classroom").html(s);
+            }
+        });
+    }
+
+    function populateTeachers() {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetTeacherOptions",
+            data: {},
+            success: function (data) {
+                console.log(data)
+
+                var s = '<option value="-1" disabled selected>Please Select a Teacher</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Id + '">' + data[i].FirstName + '</option>';
+                }
+                $("#teacher").html(s);
+            }
+        });
     }
 
 

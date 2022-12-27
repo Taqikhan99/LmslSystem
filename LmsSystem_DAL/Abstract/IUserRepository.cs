@@ -37,13 +37,18 @@ namespace LmsSystem_DAL.Abstract
         List<Department> getDepartmentOptions();
         List<UsersByDepart> GetStudentsByDepart(int id);
         List<Programs> getProgramsOptions(int id = 0);
+        List<Course> getCourseOptions(int id = 0);
         List<Course> GetAllCourses();
         List<Programs> GetAllPrograms(); 
 
+        List<TimeSlot> GetTimeSlots();
         List<Roles> getRolesOptions();
 
         List<Class> GetAllClasses();
 
         List<Department> GetDepartments();
+
+        List<Classroom> GetClassrooms();
+        List<Teacher> GetTeacherOptions();
     }
 }

@@ -11,11 +11,15 @@ namespace LmsSystem_DAL.Entities
         public int ClassId { get; set; }
         
         public int TeacherId { get; set; }
+        public string TeacherName { get; set; }
         public int CourseId { get; set; }
 
         public string ClassDay { get; set; }
 
-        public DateTime ClassTime { get; set; }
+        public int SlotId { get; set; }
+
+        public string ClassTime { get; set; }
+        public int ClassRoomId { get; set; }
 
     }
 }
