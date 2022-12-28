@@ -3,7 +3,9 @@ using LmsSystem_DAL.Concrete;
 using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
@@ -16,10 +18,12 @@ namespace LmsSystem_Web.Controllers
     {
         // GET: User
         private IUserRepository _userRepo;
+        private ICourseRelatedRepository _courseRelatedRepo;
 
         public UserController()
         {
             this._userRepo = new UserRepository();
+            this._courseRelatedRepo= new CourseRelatedRepository();
         }
         public ActionResult Index()
         {
@@ -40,19 +44,29 @@ namespace LmsSystem_Web.Controllers
         //create user Post req
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateStudent(User user)
+        public ActionResult CreateStudent(Student student)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool success = _userRepo.AddStudent(user);
-                if (success)
+                if (ModelState.IsValid)
                 {
-                    TempData["message"] = "New Student Added";
-                    return RedirectToAction("Index");
-                }
-                else
-                    TempData["emessage"] = "Something Wrong!";
 
+                    bool success = _userRepo.AddStudent(student);
+
+                    if (success)
+                    {
+                        TempData["message"] = "New Student Added";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        TempData["emessage"] = "Something Wrong!";
+
+
+                }
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
             }
 
             return View();
@@ -64,30 +78,38 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetStudents()
         {
 
-            List<User> users = _userRepo.GetStudents();
+            List<Student> users = _userRepo.GetStudents();
             ViewBag.smessage = TempData["message"];
 
             return View(users);
         }
 
+        
+
         [HttpGet]
-        public ActionResult EditUser(int Id,int roleId)
+        public ActionResult EditStudent(int Id)
         {
+            try
+            {
+                Student std = _userRepo.GetStudentById(Id);
 
-            User user = _userRepo.GetUserByIdRole(Id,roleId);
-            ViewBag.roleid = roleId;
-
-            return View(user);
+                return View(std);
+            }
+            catch(Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage","Account");
+            }
         }
 
         [HttpPost]
-        public ActionResult EditUser(User user)
+        public ActionResult EditStudent(Student user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.UpdateUser(user);
+                    bool success = _userRepo.UpdateStudent(user);
                     if (success)
                     {
                         TempData["message"] = "Student Record Updated";
@@ -97,54 +119,140 @@ namespace LmsSystem_Web.Controllers
 
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["message"] = ex.Message;
-                return View();
+                return RedirectToAction("ErrorPage", "Account");
 
             }
 
         }
-        //get student details
-        public ActionResult UserDetails(int id,int roleid)
+        ////get student details
+        public ActionResult StudentDetails(int id)
         {
             try
             {
-                UserDetails user = _userRepo.GetUserDetails(id,roleid);
+                Student std = _userRepo.GetStudentDetails(id);
 
-                if (roleid == 2)
-                {
-                    ViewBag.roletype = "teacher";
-                }
-                if (roleid == 3)
-                {
-                    ViewBag.roletype = "student";
-                }
+                return View(std);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
 
-                return View(user);
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateTeacher()
+        {
+            return View();
+        }
+
+        //create user Post req
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateTeacher(Teacher teacher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    bool success = _userRepo.AddTeacher(teacher);
+
+                    if (success)
+                    {
+                        TempData["message"] = "New Teacher Added";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        TempData["emessage"] = "Something Wrong!";
+
+
+                }
             }
             catch (Exception ex)
             {
                 TempData["message"] = ex.Message;
+            }
+
+            return View();
+        }
+
+
+        //edit teacher
+        [Authorize(Roles ="Admin")]
+        public ActionResult EditTeacher(int id)
+        {
+            try
+            {
+                Teacher teacher = _userRepo.GetTeacherById(id);
+
+                return View(teacher);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+
+            
+        }
+
+        // Edit Teacher Post
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
+        public ActionResult EditTeacher(Teacher teacher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return RedirectToAction("Index");
+                }
                 return View();
 
+            }
+            catch(Exception ex)
+            {
+                TempData["message"]= ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+
+        }
+
+
+        //Get TeacherDetail
+
+        [Authorize(Roles ="Admin")]
+        public ActionResult GetTeacherDetails(int id)
+        {
+            try
+            {
+                Teacher teacher = _userRepo.GetTeacherDetails(id);
+
+                return View(teacher);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
             }
         }
 
         //delete student
-        public ActionResult DeleteUser(int id,int roleid)
+        public ActionResult DeleteTeacher(int id)
         {
             try
             {
                 // TODO: Add delete logic here
 
-                bool stdDeleted = _userRepo.DeleteUser(id,roleid);
+                bool stdDeleted = _userRepo.DeleteTeacher(id);
                 if (stdDeleted)
                 {
-                    if(roleid==3)
-                        TempData["message"] = "Student Deleted Success!";
-                    else
-                        TempData["message"] = "Teacher Deleted Success!";
+                        TempData["message"] = "Student Deleted Success!"; 
                 }
 
                 return RedirectToAction("Index");
@@ -172,7 +280,7 @@ namespace LmsSystem_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool success = _userRepo.AddCourse(c);
+                bool success = _courseRelatedRepo.AddCourse(c);
                 if (success)
                 {
 
@@ -193,7 +301,7 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetTeachers()
         {
 
-            List<User> users = _userRepo.GetTeachers();
+            List<Teacher> users = _userRepo.GetTeachers();
 
             return View(users);
         }
@@ -213,7 +321,7 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetCourses()
         {
             //take all courses from userreo.getallcourses
-            List<Course> courses =  _userRepo.GetAllCourses();
+            List<Course> courses =  _courseRelatedRepo.GetAllCourses();
             return View(courses);
         }
 
@@ -232,7 +340,7 @@ namespace LmsSystem_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool success = _userRepo.AddProgram(p);
+                bool success = _courseRelatedRepo.AddProgram(p);
                 if (success)
                 {
                     TempData["message"] = "New Program Added";
@@ -250,7 +358,7 @@ namespace LmsSystem_Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult GetPrograms()
         {
-            List<Programs> progs = _userRepo.GetAllPrograms();
+            List<Programs> progs = _courseRelatedRepo.GetAllPrograms();
             return View(progs);
         }
 
@@ -259,7 +367,7 @@ namespace LmsSystem_Web.Controllers
         //Get and add classes
         public ActionResult GetClasses()
         {
-            List<Class> classes = _userRepo.GetAllClasses();
+            List<Class> classes = _courseRelatedRepo.GetAllClasses();
             return View(classes);
         }
 
@@ -278,7 +386,7 @@ namespace LmsSystem_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.AddClass(c);
+                    bool success = _courseRelatedRepo.AddClass(c);
                     if (success)
                     {
                         TempData["message"] = "New Class Added";
@@ -296,35 +404,35 @@ namespace LmsSystem_Web.Controllers
         }
 
         //Get and create Teachers
-        public ActionResult CreateTeacher()
-        {
-            return View();
-        }
+        //public ActionResult CreateTeacher()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult CreateTeacher(User u)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    bool success = _userRepo.AddTeacher(u);
-                    if (success)
-                    {
-                        TempData["message"] = "New Teacher Added";
-                        return RedirectToAction("Index");
-                    }
-                }
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.smessage = ex.Message;
-                return View();
-            }
+        //[HttpPost]
+        //public ActionResult CreateTeacher(Teacher t)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            bool success = _userRepo.AddTeacher(u);
+        //            if (success)
+        //            {
+        //                TempData["message"] = "New Teacher Added";
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.smessage = ex.Message;
+        //        return View();
+        //    }
 
             
-        }
+        //}
 
 
 
@@ -332,7 +440,7 @@ namespace LmsSystem_Web.Controllers
         //get departments
         public ActionResult GetDepartmentsOptions()
         {
-            List<Department> departs = _userRepo.getDepartmentOptions();
+            List<Department> departs = _courseRelatedRepo.getDepartmentOptions();
 
             return Json(departs, JsonRequestBehavior.AllowGet);
 
@@ -341,26 +449,89 @@ namespace LmsSystem_Web.Controllers
         //get roles
         public ActionResult GetRolesOptions()
         {
-            List<Roles> roles = _userRepo.getRolesOptions();
+            try
+            {
+                List<Roles> roles = _courseRelatedRepo.getRolesOptions();
 
-            return Json(roles, JsonRequestBehavior.AllowGet);
-
+                return Json(roles, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
         }
 
-        //get programs
-        public ActionResult GetProgramOptions()
+        //get course options
+        public ActionResult GetCourseOptions(int id)
         {
-            List<Programs> progs = _userRepo.getProgramsOptions();
+            try
+            {
+                List<Course> courses = _courseRelatedRepo.getCourseOptions(id);
+
+                return Json(courses, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+
+
+        //get programs
+        public ActionResult GetProgramOptions(int id)
+        {
+            List<Programs> progs = _courseRelatedRepo.getProgramsOptions(id);
 
             return Json(progs, JsonRequestBehavior.AllowGet);
         }
+
+        //get time slots
+        public ActionResult GetTimeSlots()
+        {
+            List<TimeSlot> slots=_courseRelatedRepo.GetTimeSlots();
+            return Json(slots, JsonRequestBehavior.AllowGet);
+
+        }
+
+        //get rooms based on available time slot
+        public ActionResult GetClassRoomOptions(string day,int slotid)
+        {
+            try
+            {
+                List<Classroom> classrooms = _courseRelatedRepo.GetClassrooms(day,slotid);
+                return Json(classrooms, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+
+        public ActionResult GetTeacherOptions(string day)
+        {
+            try
+            {
+                List<Teacher> t = _courseRelatedRepo.GetTeacherOptions(day);
+                return Json(t, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+        
+
 
         //==========================================
 
         // Get Departments
         public ActionResult GetDepartments()
         {
-            List<Department> departments = _userRepo.GetDepartments();
+            List<Department> departments = _courseRelatedRepo.GetDepartments();
             return View(departments);
         }
 
@@ -378,7 +549,7 @@ namespace LmsSystem_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.AddDepartment(department);
+                    bool success = _courseRelatedRepo.AddDepartment(department);
                     if (success)
                     {
                         TempData["message"] = "New Department Added";

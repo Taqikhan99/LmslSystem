@@ -43,14 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ICourseRelatedRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
+    <Compile Include="Concrete\CourseRelatedRepository.cs" />
     <Compile Include="Concrete\DbClass.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Entities\Class.cs" />
+    <Compile Include="Entities\Classroom.cs" />
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Programs.cs" />
     <Compile Include="Entities\Roles.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\Teacher.cs" />
+    <Compile Include="Entities\TimeSlot.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserDetails.cs" />
     <Compile Include="Entities\UsersByDepart.cs" />

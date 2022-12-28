@@ -12,20 +12,21 @@
 <div class="table-responsive">
     <table class="table table-bordered" style="color:white; overflow-x:scroll;">
         <tr>
+
             <th>
-                @Html.DisplayNameFor(model => model.CourseId)
+                Teacher Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                Course Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClassId)
+                Class Day
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClassDay)
+                Room #
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClassTime)
+                Time
             </th>
             <th>
                 Options
@@ -35,18 +36,19 @@
         @foreach (var item in Model)
         {
             <tr>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.CourseId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
+                    @Html.DisplayFor(modelItem => item.TeacherName)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.ClassId)
+                    @Html.DisplayFor(modelItem => item.CourseName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ClassDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ClassTime)

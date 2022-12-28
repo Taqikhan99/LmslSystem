@@ -21,8 +21,7 @@ namespace LmsSystem_DAL.Concrete
         //procedure call for insert
         public bool execInsertProc(string procname,List<SqlParameter> sqlParameters)
         {
-            try
-            {
+            
                 int i = 0;
 
 
@@ -47,9 +46,7 @@ namespace LmsSystem_DAL.Concrete
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex) { return false; }
-
+            
 
         }
 
@@ -82,6 +79,31 @@ namespace LmsSystem_DAL.Concrete
                 return dt;
             
             }
+
+
+        //gene func to call a sql query withpout proc
+        public DataTable execQuery(string query)
+        {
+
+            DataTable dt = new DataTable();
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                con.Open();
+                adapter.Fill(dt);
+                con.Close();
+
+
+            }
+
+            return dt;
+
+        }
+
+
+
 
         public SqlConnection GetConnection()
         { 

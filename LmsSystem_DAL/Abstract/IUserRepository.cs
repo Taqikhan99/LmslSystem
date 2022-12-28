@@ -9,36 +9,29 @@ namespace LmsSystem_DAL.Abstract
 {
     public interface IUserRepository
     {
-        bool AddStudent(User user);
-        bool AddTeacher(User user);
-        bool AddProgram(Programs p);
-        bool AddCourse(Course course);
+        bool AddStudent(Student user);
+        bool AddTeacher(Teacher user);
+        
 
-        bool AddDepartment(Department d);
+        Student GetStudentById(int id);
 
-        bool AddClass(Class c);
+        Teacher GetTeacherById(int id);
+        Teacher GetTeacherDetails(int id);
 
-        UserDetails GetUserDetails(int id,int roleid);
+        Student GetStudentDetails(int id);
 
-        bool UpdateUser(User user);
+        bool UpdateStudent(Student user);
         //bool UpdateTeacher(User user);
-        bool DeleteUser(int id,int roleid);
-        List<User> GetStudents();
+       
+        List<Student> GetStudents();
 
-        User GetUserByIdRole(int id, int roleId);
+        
         //User GetTeacherById(int id);
 
-        List<User> GetTeachers();
-        List<Department> getDepartmentOptions();
+        List<Teacher> GetTeachers();
         List<UsersByDepart> GetStudentsByDepart(int id);
-        List<Programs> getProgramsOptions();
-        List<Course> GetAllCourses();
-        List<Programs> GetAllPrograms(); 
 
-        List<Roles> getRolesOptions();
-
-        List<Class> GetAllClasses();
-
-        List<Department> GetDepartments();
+        bool DeleteTeacher(int id);
+        bool DeleteStudent(int id);
     }
 }

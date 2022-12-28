@@ -141,12 +141,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\CreateUser.cshtml" />
     <Content Include="Views\User\CreateCourse.cshtml" />
     <Content Include="Views\Shared\AdminHome.cshtml" />
     <Content Include="Views\Shared\TeacherHome.cshtml" />
     <Content Include="Views\Shared\StudentHome.cshtml" />
-    <Content Include="Views\User\GetStudents.cshtml" />
     <Content Include="Views\User\GetCourses.cshtml" />
     <Content Include="Views\User\CourseRelated.cshtml" />
     <Content Include="Views\User\CreateProgram.cshtml" />
@@ -156,10 +154,14 @@
     <Content Include="Views\User\CreateStudent.cshtml" />
     <Content Include="Views\User\GetTeachers.cshtml" />
     <Content Include="Views\User\CreateTeacher.cshtml" />
-    <Content Include="Views\User\EditUser.cshtml" />
-    <Content Include="Views\User\UserDetails.cshtml" />
+    <Content Include="Views\User\StudentDetails.cshtml" />
     <Content Include="Views\User\GetDepartments.cshtml" />
     <Content Include="Views\User\CreateDepartment.cshtml" />
+    <Content Include="Views\Account\ErrorPage.cshtml" />
+    <Content Include="Views\User\EditStudent.cshtml" />
+    <Content Include="Views\User\GetStudents.cshtml" />
+    <Content Include="Views\User\EditTeacher.cshtml" />
+    <Content Include="Views\User\GetTeacherDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -169,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LmsSystem_DAL\LmsSystem_DAL.csproj">

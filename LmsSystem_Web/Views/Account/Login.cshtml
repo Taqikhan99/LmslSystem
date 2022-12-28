@@ -1,4 +1,4 @@
-﻿
+﻿@model LmsSystem_DAL.Entities.UserVerify
 @{
     Layout = null;
 }
@@ -17,7 +17,7 @@
             background: linear-gradient(90deg, rgba(2,78,69,1) 0%, rgba(4,35,96,1) 100%);
         }
         .form-container {
-            height:500px;
+            height:auto;
             width:50%;
             min-width:380px;
             margin:auto;
@@ -35,7 +35,7 @@
 
 </head>
 <body>
-    <div class="form-container border p-3 ">
+    <div class="form-container border p-3">
 
         <h1 class="text-center">User Login</h1>
         <div class="text-center">
@@ -45,18 +45,20 @@
         <div class="container p-3">
             <form method="post" >
                 <div class="mb-3">
-                    <label for="userEmail" class="form-label">User Email</label>
-                    <input type="text" class="form-control" id="userEmail" name="Email" >
+                    <label for="userEmail" class="form-label">User Username</label>
+                    <input type="text" class="form-control" id="userEmail" name="Email">
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="mb-3">
                     <label for="userPass" class="form-label">Password</label>
                     <input type="password" class="form-control" id="userPass" name="Password">
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
                 <br />
 
-                <div class="d-grid gap-2">
-                    <button type="submit" onclick="return validate()" class="btn btn-primary">Login</button>
+                <div class="d-grid gap-2 ">
+                    <button type="submit" onclick="" class="btn btn-primary">Login</button>
 
                 </div>
                
