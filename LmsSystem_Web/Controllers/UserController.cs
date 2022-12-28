@@ -18,10 +18,12 @@ namespace LmsSystem_Web.Controllers
     {
         // GET: User
         private IUserRepository _userRepo;
+        private ICourseRelatedRepository _courseRelatedRepo;
 
         public UserController()
         {
             this._userRepo = new UserRepository();
+            this._courseRelatedRepo= new CourseRelatedRepository();
         }
         public ActionResult Index()
         {
@@ -247,7 +249,7 @@ namespace LmsSystem_Web.Controllers
             {
                 // TODO: Add delete logic here
 
-                bool tDeleted = _userRepo.DelTeacher(id);
+                bool stdDeleted = _userRepo.DeleteTeacher(id);
                 if (stdDeleted)
                 {
                         TempData["message"] = "Student Deleted Success!"; 
@@ -278,7 +280,7 @@ namespace LmsSystem_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool success = _userRepo.AddCourse(c);
+                bool success = _courseRelatedRepo.AddCourse(c);
                 if (success)
                 {
 
@@ -319,7 +321,7 @@ namespace LmsSystem_Web.Controllers
         public ActionResult GetCourses()
         {
             //take all courses from userreo.getallcourses
-            List<Course> courses =  _userRepo.GetAllCourses();
+            List<Course> courses =  _courseRelatedRepo.GetAllCourses();
             return View(courses);
         }
 
@@ -338,7 +340,7 @@ namespace LmsSystem_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool success = _userRepo.AddProgram(p);
+                bool success = _courseRelatedRepo.AddProgram(p);
                 if (success)
                 {
                     TempData["message"] = "New Program Added";
@@ -356,7 +358,7 @@ namespace LmsSystem_Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult GetPrograms()
         {
-            List<Programs> progs = _userRepo.GetAllPrograms();
+            List<Programs> progs = _courseRelatedRepo.GetAllPrograms();
             return View(progs);
         }
 
@@ -365,7 +367,7 @@ namespace LmsSystem_Web.Controllers
         //Get and add classes
         public ActionResult GetClasses()
         {
-            List<Class> classes = _userRepo.GetAllClasses();
+            List<Class> classes = _courseRelatedRepo.GetAllClasses();
             return View(classes);
         }
 
@@ -384,7 +386,7 @@ namespace LmsSystem_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.AddClass(c);
+                    bool success = _courseRelatedRepo.AddClass(c);
                     if (success)
                     {
                         TempData["message"] = "New Class Added";
@@ -438,7 +440,7 @@ namespace LmsSystem_Web.Controllers
         //get departments
         public ActionResult GetDepartmentsOptions()
         {
-            List<Department> departs = _userRepo.getDepartmentOptions();
+            List<Department> departs = _courseRelatedRepo.getDepartmentOptions();
 
             return Json(departs, JsonRequestBehavior.AllowGet);
 
@@ -449,7 +451,7 @@ namespace LmsSystem_Web.Controllers
         {
             try
             {
-                List<Roles> roles = _userRepo.getRolesOptions();
+                List<Roles> roles = _courseRelatedRepo.getRolesOptions();
 
                 return Json(roles, JsonRequestBehavior.AllowGet);
             }
@@ -465,7 +467,7 @@ namespace LmsSystem_Web.Controllers
         {
             try
             {
-                List<Course> courses = _userRepo.getCourseOptions(id);
+                List<Course> courses = _courseRelatedRepo.getCourseOptions(id);
 
                 return Json(courses, JsonRequestBehavior.AllowGet);
             }
@@ -480,7 +482,7 @@ namespace LmsSystem_Web.Controllers
         //get programs
         public ActionResult GetProgramOptions(int id)
         {
-            List<Programs> progs = _userRepo.getProgramsOptions(id);
+            List<Programs> progs = _courseRelatedRepo.getProgramsOptions(id);
 
             return Json(progs, JsonRequestBehavior.AllowGet);
         }
@@ -488,7 +490,7 @@ namespace LmsSystem_Web.Controllers
         //get time slots
         public ActionResult GetTimeSlots()
         {
-            List<TimeSlot> slots=_userRepo.GetTimeSlots();
+            List<TimeSlot> slots=_courseRelatedRepo.GetTimeSlots();
             return Json(slots, JsonRequestBehavior.AllowGet);
 
         }
@@ -498,7 +500,7 @@ namespace LmsSystem_Web.Controllers
         {
             try
             {
-                List<Classroom> classrooms = _userRepo.GetClassrooms(day,slotid);
+                List<Classroom> classrooms = _courseRelatedRepo.GetClassrooms(day,slotid);
                 return Json(classrooms, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
@@ -512,7 +514,7 @@ namespace LmsSystem_Web.Controllers
         {
             try
             {
-                List<Teacher> t = _userRepo.GetTeacherOptions(day);
+                List<Teacher> t = _courseRelatedRepo.GetTeacherOptions(day);
                 return Json(t, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -529,7 +531,7 @@ namespace LmsSystem_Web.Controllers
         // Get Departments
         public ActionResult GetDepartments()
         {
-            List<Department> departments = _userRepo.GetDepartments();
+            List<Department> departments = _courseRelatedRepo.GetDepartments();
             return View(departments);
         }
 
@@ -547,7 +549,7 @@ namespace LmsSystem_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = _userRepo.AddDepartment(department);
+                    bool success = _courseRelatedRepo.AddDepartment(department);
                     if (success)
                     {
                         TempData["message"] = "New Department Added";

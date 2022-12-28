@@ -14,13 +14,13 @@ namespace LmsSystem_DAL.Concrete
     public class UserRepository : IUserRepository
     {
         DbClass db = new DbClass();
-        private SqlConnection con;
-        string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
-        void connection()
-        {
+        //private SqlConnection con;
+        //string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
+        //void connection()
+        //{
             
-            con = new SqlConnection(constr);
-        }
+        //    con = new SqlConnection(constr);
+        //}
 
         /// <summary>
         /// Add new User
@@ -66,154 +66,8 @@ namespace LmsSystem_DAL.Concrete
             return added;
 
         }
-
-        //Add new course
-        public bool AddCourse(Course course) 
-        {
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@CourseName", course.CourseName));
-            sqlParameters.Add(new SqlParameter("@ProgramId", course.ProgramId));
-            bool added = db.execInsertProc("spAddCourse", sqlParameters);
-
-            return added;
-
-        }
-
-        /// <summary>
-        /// Get Departments to populate the select box while creating nnew user
-        /// </summary>
-        /// <returns></returns>
-        /// 
-        public List<Department> getDepartmentOptions()
-        {
-            connection();
-            //make departmnt list
-            List<Department> departments = new List<Department>();
-
-            SqlCommand cmd = new SqlCommand("spGetDepartmentOptions", con);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-
-            foreach(DataRow row in dt.Rows)
-            {
-                departments.Add(new Department
-                {
-                    DepartmentId = Convert.ToInt32(row["DepartmentId"]),
-                    DepartmentName = row["DepartName"].ToString()
-                }); 
-            }
-
-            return departments;
-
-
-        }
-
-        /// <summary>
-        /// Get roles options
-        /// </summary>
-        /// <returns></returns>
-        public List<Roles> getRolesOptions()
-        {
-            connection();
-            //make departmnt list
-            List<Roles> roles = new List<Roles>();
-
-            SqlCommand cmd = new SqlCommand("spGetRoles", con);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                roles.Add(new Roles
-                {
-                    RoleId = Convert.ToInt32(row["RoleId"]),
-                    RoleName = row["RoleName"].ToString()
-                });
-            }
-
-            return roles;
-
-
-        }
-
-        public List<Programs> getProgramsOptions(int id =0)
-        {
-            List<Programs> programs = new List<Programs>();
-            List<SqlParameter> parameters = new List<SqlParameter>();
-
-            DataTable dt;
-            if (id > 0)
-            {   parameters.Add(new SqlParameter("@depId", id));
-                dt = db.execGetProc("spGetProgramOptions", parameters);
-            }
-            else
-            {
-                dt = db.execGetProc("spGetPrograms");
-            }
-            if (dt.Rows.Count > 0) {
-                foreach (DataRow r in dt.Rows)
-                {
-                    programs.Add(new Programs
-                    {
-                        ProgramId = Convert.ToInt32(r["ProgramId"]),
-                        ProgramName = r["ProgramName"].ToString(),
-                        DepartId = Convert.ToInt32(r["DepartId"])
-                    });
-
-                }
-            }
-
-
-            return programs;
-        }
-
-
-        //get course options
-        public List<Course> getCourseOptions(int id = 0)
-        {
-            List<Course> courses = new List<Course>();
-            List<SqlParameter> parameters = new List<SqlParameter>();
-
-            
-            
-            parameters.Add(new SqlParameter("@progId", id));
-            DataTable dt = db.execGetProc("spGetCourseOptions", parameters);
-            
-            
-            if (dt.Rows.Count > 0)
-            {
-                foreach (DataRow r in dt.Rows)
-                {
-                    courses.Add(new Course
-                    {
-                        ProgramId = Convert.ToInt32(r["ProgramId"]),
-                        CourseName = r["CourseName"].ToString(),
-                        CourseId = Convert.ToInt32(r["CourseId"])
-                    });
-
-                }
-            }
-
-
-            return courses;
-        }
-
-        //get class room based on day and time slot
-
-
-
+        
+        
         //get time slots
         public List<TimeSlot> GetTimeSlots()
         {
@@ -233,54 +87,7 @@ namespace LmsSystem_DAL.Concrete
                 }
             }
             return slots;
-        }
-
-
-        //get classroom options based on condition where day and time slots do not match.
-        public List<Classroom> GetClassrooms(string day,int timeid)
-        {
-            List<Classroom> classrooms = new List<Classroom>();
-
-            DataTable dt = db.execQuery($@"select cr.RoomId,cr.RoomName from ClassRoomTb cr 
-                where cr.RoomId not in( Select c.RoomId from ClassTb c where ClassDay= '{day}' and SlotId = {timeid})");
-
-            if (dt.Rows.Count > 0)
-            {
-                foreach(DataRow dr in dt.Rows)
-                {
-                    classrooms.Add(new Classroom
-                    {
-                        Id = Convert.ToInt32(dr["RoomId"]),
-                        RoomName = dr["RoomName"].ToString(),
-                    });
-                }
-            }
-
-            return classrooms;
-        }
-
-        public List<Teacher> GetTeacherOptions(string day)
-        {
-            List<Teacher> teachers= new List<Teacher>();
-
-            DataTable dt = db.execQuery($"select u.Id,t.FirstName+' '+t.LastName as TeacherName from UserTb u inner join TeacherTb t" +
-                      $" on u.Id=t.TeacherId where u.Id not in( Select  TeacherId from ClassTb where ClassDay='{day}') ");
-            if (dt.Rows.Count > 0)
-            {
-                foreach(DataRow dr in dt.Rows)
-                {
-                    teachers.Add(new Teacher
-                    {
-                        Id = Convert.ToInt32(dr["Id"]),
-                        FirstName = dr["TeacherName"].ToString()
-                    });
-                }
-            }
-            return teachers;
-        }
-
-
-        
+        }        
         public List<Student> GetStudents()
         {
             
@@ -363,32 +170,7 @@ namespace LmsSystem_DAL.Concrete
 
 
 
-        public User GetUserByIdRole(int id,int roleId) {
 
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@uid", id));
-            sqlParameters.Add(new SqlParameter("@roleid", roleId));
-
-            User user = new User();
-
-            DataTable dt = db.execGetProc("spGetUserByIdnRole", sqlParameters);
-
-            if(dt.Rows.Count > 0)
-            {
-                DataRow r = dt.Rows[0];
-                user.Id = Convert.ToInt32(r["Id"]);
-                user.FirstName = r["FirstName"].ToString();
-                user.LastName = r["LastName"].ToString();
-                user.Email = r["Email"].ToString();
-                user.Phone = r["Phone"].ToString() ;
-                user.JoinedDate = Convert.ToDateTime(r["JoinedDate"]);
-                user.DepartmentId= Convert.ToInt32(r["DepartId"]);
-                user.Password= r["Password"].ToString();
-            }
-            return user;
-
-
-        }
 
 
 
@@ -445,15 +227,6 @@ namespace LmsSystem_DAL.Concrete
         }
 
         
-        //delete student
-        public bool DeleteUser(int id, int roleid)
-        {
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@stdId",id));
-            sqlParameters.Add(new SqlParameter("@roleId", roleid));
-            bool deleted = db.execInsertProc("spDeleteUser ", sqlParameters);
-            return deleted;
-        }
 
         /// <summary>
         /// Get All Teachers
@@ -568,150 +341,14 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
-        //get all courses
-
-        public List<Course> GetAllCourses()
+        public bool DeleteTeacher(int id)
         {
-            connection();
-            List<Course> courses = new List<Course>();
-            SqlCommand cmd = new SqlCommand("spGetCourses", con);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            adapter.Fill(dt);
-            con.Close();
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                //add new course to data table for each row get
-                courses.Add(new Course
-                {
-                    CourseId = Convert.ToInt32(dr["CourseId"]),
-                    CourseName = dr["CourseName"].ToString()
-                }) ;
-
-            }
-
-            return courses;
-        }
-
-
-        
-
-        
-
-        public bool AddProgram(Programs p)
-        {
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@progName", p.ProgramName));
-            sqlParameters.Add(new SqlParameter("@departId", p.DepartId));
-            bool added = db.execInsertProc("spAddProgram", sqlParameters);
-
-            return added;
-            
-        }
-
-        public List<Programs> GetAllPrograms()
-        {
-            
-            List<Programs> programs = new List<Programs>();
-            DataTable dt = db.execGetProc("spGetPrograms"); 
-
-            foreach(DataRow dr in dt.Rows)
-            {
-                programs.Add(new Programs
-                {
-                    ProgramId = Convert.ToInt32( dr["ProgramId"]),
-                    ProgramName = dr["ProgramName"].ToString(),
-                    DepartId = Convert.ToInt32(dr["DepartId"])
-                });
-            }
-
-            return programs;
-
-        }
-        //add and get classes
-
-        public bool AddClass(Class cl)
-        {
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@teacherId", cl.TeacherId));
-            sqlParameters.Add(new SqlParameter("@courseId", cl.CourseId));
-            sqlParameters.Add(new SqlParameter("@classDay", cl.ClassDay));
-            sqlParameters.Add(new SqlParameter("@roomId", cl.ClassRoomId));
-            sqlParameters.Add(new SqlParameter("@slotId", cl.SlotId));
-
-            bool added = db.execInsertProc("spAddClass", sqlParameters);
-
-            return added;
-        }
-
-        public List<Class> GetAllClasses()
-        {
-            List<Class> classes = new List<Class>();
-            DataTable dt = db.execGetProc("spGetClass");
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                classes.Add(new Class
-                {
-                    ClassId = Convert.ToInt32(dr["ClassId"]),
-                    TeacherName = dr["TeacherName"].ToString(),
-                    CourseName = dr["CourseName"].ToString(),
-                    ClassDay = dr["ClassDay"].ToString(),
-                    Room = dr["RoomName"].ToString(),
-                    ClassTime = dr["Classtime"].ToString()
-
-                }) ;
-            }
-
-            return classes;
-
-
-
             throw new NotImplementedException();
         }
 
-
-        ///=================================///
-        ///Department Related
-        /// ===
-        public List<Department> GetDepartments()
+        public bool DeleteStudent(int id)
         {
-            List<Department> departments = new List<Department>();
-            DataTable dt = db.execGetProc("spGetDepartments");
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                departments.Add(new Department
-                {
-                    DepartmentId = Convert.ToInt32(dr["DepartmentId"]),
-                    DepartmentName = dr["DepartName"].ToString(),
-                    StartYear = dr["StartYear"].ToString(),
-                    StudentsEnrolled = Convert.ToInt32(dr["StudentsEnrolled"])
-
-                });
-            }
-
-            return departments;
+            throw new NotImplementedException();
         }
-
-        public bool AddDepartment(Department d)
-        {
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Departname", d.DepartmentName));
-            sqlParameters.Add(new SqlParameter("@StartDate", d.StartDate));
-
-            bool added = db.execInsertProc("spAddDepart", sqlParameters);
-
-            return added;
-        }
-
-
     }
 }
-
-

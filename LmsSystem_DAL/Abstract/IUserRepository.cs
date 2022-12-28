@@ -11,12 +11,7 @@ namespace LmsSystem_DAL.Abstract
     {
         bool AddStudent(Student user);
         bool AddTeacher(Teacher user);
-        bool AddProgram(Programs p);
-        bool AddCourse(Course course);
-
-        bool AddDepartment(Department d);
-
-        bool AddClass(Class c);
+        
 
         Student GetStudentById(int id);
 
@@ -30,25 +25,13 @@ namespace LmsSystem_DAL.Abstract
        
         List<Student> GetStudents();
 
-        User GetUserByIdRole(int id, int roleId);
+        
         //User GetTeacherById(int id);
 
         List<Teacher> GetTeachers();
-        List<Department> getDepartmentOptions();
         List<UsersByDepart> GetStudentsByDepart(int id);
-        List<Programs> getProgramsOptions(int id = 0);
-        List<Course> getCourseOptions(int id = 0);
-        List<Course> GetAllCourses();
-        List<Programs> GetAllPrograms(); 
 
-        List<TimeSlot> GetTimeSlots();
-        List<Roles> getRolesOptions();
-
-        List<Class> GetAllClasses();
-
-        List<Department> GetDepartments();
-
-        List<Classroom> GetClassrooms(string day, int timeid);
-        List<Teacher> GetTeacherOptions(string day);
+        bool DeleteTeacher(int id);
+        bool DeleteStudent(int id);
     }
 }

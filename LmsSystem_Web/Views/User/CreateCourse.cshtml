@@ -65,10 +65,11 @@
 
 
     $(document).ready(function () {
+        alert("call to getprogramoptions");
         $.ajax({
             type: "GET",
             url: "/User/GetProgramOptions",
-            data: "{}",
+            data: {id:0},
             success: function (data) {
                 console.log(data)
                 var s = '<option value="-1">Please Select a Program</option>';
