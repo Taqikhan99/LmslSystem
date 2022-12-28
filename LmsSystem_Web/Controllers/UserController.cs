@@ -242,7 +242,7 @@ namespace LmsSystem_Web.Controllers
             }
         }
 
-        //delete student
+        //delete teacger
         public ActionResult DeleteTeacher(int id)
         {
             try
@@ -252,15 +252,22 @@ namespace LmsSystem_Web.Controllers
                 bool stdDeleted = _userRepo.DeleteTeacher(id);
                 if (stdDeleted)
                 {
-                        TempData["message"] = "Student Deleted Success!"; 
+                        TempData["message"] = "Teacher Deleted Success!";
+                        return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["message"] = "The Teacher is Teaching a course. please drop course first!.";
+                    return RedirectToAction("GetTeachers");
                 }
 
-                return RedirectToAction("Index");
+                
 
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                TempData["message"]=ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
             }
 
         }
@@ -303,6 +310,7 @@ namespace LmsSystem_Web.Controllers
 
             List<Teacher> users = _userRepo.GetTeachers();
 
+            ViewBag.smessage = TempData["message"];
             return View(users);
         }
 
@@ -562,6 +570,47 @@ namespace LmsSystem_Web.Controllers
             {
                 TempData["message"] = ex.Message;
                 return RedirectToAction("Index");
+            }
+        }
+
+
+        //delete class
+        public ActionResult DeleteClass(int id)
+        {
+            try
+            {
+                bool deleted = _courseRelatedRepo.DeleteClass(id);
+                if (deleted)
+                {
+                    TempData["message"] = "Course Deleted Success!";
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("GetClasses");
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+        }
+        //delete course
+        
+        public ActionResult DeleteCourse(int id)
+        {
+            try
+            {
+                bool deleted = _courseRelatedRepo.DeleteCourse(id);
+                if (deleted)
+                {
+                    TempData["message"] = "Course Deleted Success!";
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("GetCourses");
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
             }
         }
 

@@ -103,7 +103,9 @@ namespace LmsSystem_DAL.Concrete
                 courses.Add(new Course
                 {
                     CourseId = Convert.ToInt32(dr["CourseId"]),
-                    CourseName = dr["CourseName"].ToString()
+                    CourseName = dr["CourseName"].ToString(),
+                    ProgramName = dr["ProgramName"].ToString()
+                   
                 });
 
             }
@@ -254,9 +256,25 @@ namespace LmsSystem_DAL.Concrete
             return roles;
         }
 
+        //get time slots
         public List<TimeSlot> GetTimeSlots()
         {
-            throw new NotImplementedException();
+            List<TimeSlot> slots = new List<TimeSlot>();
+            DataTable dt = db.execQuery("Select * from TimeSlotTb");
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow r in dt.Rows)
+                {
+                    slots.Add(new TimeSlot
+                    {
+                        Id = Convert.ToInt32(r["Id"]),
+                        StartTime = r["StartTime"].ToString(),
+                        EndTime = r["EndTime"].ToString()
+                    });
+                }
+            }
+            return slots;
         }
 
         //get classroom options based on condition where day and time slots do not match.
@@ -303,6 +321,24 @@ namespace LmsSystem_DAL.Concrete
         }
 
 
+        //delete course
+        public bool DeleteCourse(int id)
+        {
+            bool deleted = db.execquery("delete from CourseTb where CourseId = " + id);
 
+            return deleted;
+        }
+
+
+        //delete class
+        public bool DeleteClass(int id)
+        {
+            bool deleted = db.execquery("delete from ClassTb where ClassId = " + id);
+
+            return deleted;
+        }
     }
+
+    
+
 }

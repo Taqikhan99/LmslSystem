@@ -31,5 +31,8 @@ namespace LmsSystem_DAL.Abstract
 
         List<Classroom> GetClassrooms(string day, int timeid);
         List<Teacher> GetTeacherOptions(string day);
+
+        bool DeleteCourse(int id);
+        bool DeleteClass(int id);
     }
 }

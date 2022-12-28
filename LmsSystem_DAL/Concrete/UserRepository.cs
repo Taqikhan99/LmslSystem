@@ -68,26 +68,7 @@ namespace LmsSystem_DAL.Concrete
         }
         
         
-        //get time slots
-        public List<TimeSlot> GetTimeSlots()
-        {
-            List<TimeSlot> slots = new List<TimeSlot>();
-            DataTable dt = db.execQuery("Select * from TimeSlotTb");
-
-            if (dt.Rows.Count > 0)
-            {
-                foreach(DataRow r in dt.Rows)
-                {
-                    slots.Add(new TimeSlot
-                    {
-                        Id = Convert.ToInt32(r["Id"]),
-                        StartTime = r["StartTime"].ToString(),
-                        EndTime = r["EndTime"].ToString()
-                    });
-                }
-            }
-            return slots;
-        }        
+               
         public List<Student> GetStudents()
         {
             
@@ -341,9 +322,23 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+
+        
+
         public bool DeleteTeacher(int id)
         {
-            throw new NotImplementedException();
+            bool deleted = false;
+            //check first if teacher is teaching a course
+
+            DataTable dt = db.execQuery($"Select * from ClassTb where TeacherId= {id}");
+
+            if (dt.Rows.Count == 0)
+            {
+                deleted = db.execquery($"delete from UserTb where LinkId={id};delete from TeacherTb where TeacherId = {id};");
+                return deleted;
+            }
+
+            return deleted;
         }
 
         public bool DeleteStudent(int id)

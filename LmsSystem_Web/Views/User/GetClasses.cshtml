@@ -55,9 +55,9 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ClassId }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.ClassId }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ClassId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Edit", "EditClass", new { id = item.ClassId }, new { @class = "btn btn-primary" })
+                    
+                    @Html.ActionLink("Delete", "DeleteClass", new { id = item.ClassId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

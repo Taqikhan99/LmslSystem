@@ -102,6 +102,31 @@ namespace LmsSystem_DAL.Concrete
 
         }
 
+        //query that return true or false
+        public bool execquery(string query)
+        {
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                int i = 0;
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+                con.Close();
+                if (i >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
+
+
+            }
+        }
+
 
 
 

@@ -42,7 +42,7 @@ namespace LmsSystem_Web.Controllers
 
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
-
+                    
                     con.Open();
                     adapter.Fill(dt);
                     con.Close();
