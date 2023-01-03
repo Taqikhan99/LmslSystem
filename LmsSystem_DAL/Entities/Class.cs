@@ -8,7 +8,7 @@ namespace LmsSystem_DAL.Entities
 {
     public class Class
     {
-        public int ClassId { get; set; }
+        public int Id { get; set; }
         
         public int TeacherId { get; set; }
         public string TeacherName { get; set; }
@@ -21,6 +21,10 @@ namespace LmsSystem_DAL.Entities
         public string CourseName { get; set; }
         public string ClassTime { get; set; }
         public int ClassRoomId { get; set; }
+
+        public string DepartName { get; set; }
+        public string ProgramName { get; set; }
+        public int ProgramId { get; set; }
 
     }
 }

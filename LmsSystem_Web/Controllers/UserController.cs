@@ -375,8 +375,16 @@ namespace LmsSystem_Web.Controllers
         //Get and add classes
         public ActionResult GetClasses()
         {
-            List<Class> classes = _courseRelatedRepo.GetAllClasses();
-            return View(classes);
+            try
+            {
+                List<Class> classes = _courseRelatedRepo.GetAllClasses();
+                return View(classes);
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
         }
 
         [Authorize(Roles ="Admin")]
@@ -572,6 +580,51 @@ namespace LmsSystem_Web.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        //Edit class
+        public ActionResult EditClass(int id)
+        {
+            try
+            {
+                Class cl = _courseRelatedRepo.GetClassById(id);
+
+                return View(cl);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e.Message;
+                return RedirectToAction("ErrorPage", "Account");
+            }
+
+        }
+
+        [HttpPost]
+        //Edit class
+        public ActionResult EditClass(Class cl)
+         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = _courseRelatedRepo.UpdateClass(cl);
+                    if (success)
+                    {
+                        TempData["message"] = "Class Record Updated";
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+                return RedirectToAction("ErrorPage", "Account");
+
+            }
+
+        }
+
 
 
         //delete class

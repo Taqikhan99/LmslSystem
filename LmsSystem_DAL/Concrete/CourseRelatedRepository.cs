@@ -77,7 +77,7 @@ namespace LmsSystem_DAL.Concrete
             {
                 classes.Add(new Class
                 {
-                    ClassId = Convert.ToInt32(dr["ClassId"]),
+                    Id = Convert.ToInt32(dr["ClassId"]),
                     TeacherName = dr["TeacherName"].ToString(),
                     CourseName = dr["CourseName"].ToString(),
                     ClassDay = dr["ClassDay"].ToString(),
@@ -337,6 +337,59 @@ namespace LmsSystem_DAL.Concrete
 
             return deleted;
         }
+
+        public Class GetClassById(int id)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@id", id));
+
+            Class cl = new Class();
+            DataTable dt = db.execGetProc("spGetClassById", sqlParameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow r = dt.Rows[0];
+                cl.Id = Convert.ToInt32(r["ClassId"]);
+                cl.TeacherId= Convert.ToInt32(r["TeacherId"]);
+                cl.TeacherName= Convert.ToString(r["TeacherName"]);
+                cl.CourseId= Convert.ToInt32(r["CourseId"]);
+                cl.CourseName = Convert.ToString(r["CourseName"]);
+                cl.ClassDay = r["ClassDay"].ToString();
+                cl.ClassRoomId = Convert.ToInt32(r["RoomId"]);
+                cl.SlotId = Convert.ToInt32(r["SlotId"]);
+                cl.ProgramId = Convert.ToInt32(r["ProgramId"]);
+                cl.ProgramName = r["ProgramName"].ToString();
+                cl.DepartName = r["DepartName"].ToString();
+                cl.ClassTime = r["ClassTime"].ToString();
+
+            }
+            return cl;
+        }
+
+        public bool UpdateClass(Class cl)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@cid", cl.Id));
+            sqlParameters.Add(new SqlParameter("@teacherId", cl.TeacherId));
+            sqlParameters.Add(new SqlParameter("@courseId", cl.CourseId));
+            sqlParameters.Add(new SqlParameter("@classDay", cl.ClassDay));
+            sqlParameters.Add(new SqlParameter("@roomId", cl.ClassRoomId));
+            sqlParameters.Add(new SqlParameter("@slotId", cl.SlotId));
+
+            bool updated = db.execInsertProc("spUpdateClass", sqlParameters);
+
+            return updated;
+
+        }
+
+        //Update class
+
+
+
+
+
+
+
     }
 
     

@@ -34,5 +34,9 @@ namespace LmsSystem_DAL.Abstract
 
         bool DeleteCourse(int id);
         bool DeleteClass(int id);
+
+        Class GetClassById(int id);
+
+        bool UpdateClass(Class cl);
     }
 }

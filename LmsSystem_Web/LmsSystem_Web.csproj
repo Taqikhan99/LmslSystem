@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,6 +163,7 @@
     <Content Include="Views\User\GetStudents.cshtml" />
     <Content Include="Views\User\EditTeacher.cshtml" />
     <Content Include="Views\User\GetTeacherDetails.cshtml" />
+    <Content Include="Views\User\EditClass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -171,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\NewFolder1\" />
+    <Folder Include="Views\Teacher\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LmsSystem_DAL\LmsSystem_DAL.csproj">
