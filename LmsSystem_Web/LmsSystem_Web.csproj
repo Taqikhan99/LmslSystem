@@ -101,6 +101,7 @@
     <Content Include="Content\images\training.png" />
     <Content Include="Content\images\university.png" />
     <Content Include="Content\images\webinar.png" />
+    <Content Include="Content\Style2.css" />
     <Content Include="Content\Styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />

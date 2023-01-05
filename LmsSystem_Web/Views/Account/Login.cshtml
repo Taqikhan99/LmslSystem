@@ -12,9 +12,9 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <style>
         body {
-            font-family:'Berlin Sans FB';
+            font-family: 'Berlin Sans FB';
             background: rgb(2,78,69);
-            background: linear-gradient(90deg, rgba(2,78,69,1) 0%, rgba(4,35,96,1) 100%);
+            background: #004953;
         }
         .form-container {
             height:auto;
@@ -73,10 +73,10 @@
 <script src="~/Scripts/jquery-3.4.0.js"></script>
 <script>
     function validate() {
-        
+
         var dname = document.getElementById("userEmail").value;
         var sdate = document.getElementById("userPass").value;
-        
+
 
         console.log(dname + " " + sdate);
         if (dname == '' || sdate == '') {
@@ -89,4 +89,32 @@
         }
 
     }
+
+
+    $(function () {
+        var message1 = '@ViewBag.smessage';
+
+        console.log(message1)
+        if (message1 != '') {
+            swal({
+                title: "Success",
+                text: message1,
+                icon:"success"
+                })
+        }
+
+    })
+     $(function () {
+        var message1 = '@ViewBag.emessage';
+
+        console.log(message1)
+        if (message1 != '') {
+            swal({
+                title: "Error",
+                text: message1,
+                icon:"error"
+                })
+        }
+
+    })
 </script>

@@ -23,6 +23,7 @@ namespace LmsSystem_Web.Controllers
         }
         public ActionResult Login()
         {
+            ViewBag.smessage = TempData["message"];
             return View();
         }
 
@@ -59,10 +60,14 @@ namespace LmsSystem_Web.Controllers
                         //setting auth cookie
                         FormsAuthentication.SetAuthCookie(user.Email, false);
 
-
+                        TempData["message"] = "Login SuccessFul!";
 
                         return RedirectToAction("Index", "User");
 
+                    }
+                    else
+                    {
+                        ViewBag.emessage = "Incorrect Username or password";
                     }
 
 
@@ -85,8 +90,9 @@ namespace LmsSystem_Web.Controllers
                 //logout using form authentication
 
                 FormsAuthentication.SignOut();
+                TempData["message"] = "Logout Success";
 
-                return RedirectToAction("Login");
+            return RedirectToAction("Login");
             }
 
 
