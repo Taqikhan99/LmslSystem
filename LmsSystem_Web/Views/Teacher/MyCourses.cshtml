@@ -1,0 +1,24 @@
+﻿@model List<LmsSystem_DAL.Entities.Course>
+@{
+    ViewBag.Title = "MyCourses";
+}
+
+
+
+
+<div class="container  mt-5 p-3">
+    <h2 class="text-light">Courses I am Teaching!</h2>
+    <br />
+    <br />
+    <div class="teachercourses">
+        @foreach (var c in Model)
+        {
+            <div class="coursecard">
+                <h4>@c.CourseName</h4>
+
+            </div>
+        }
+    </div>
+
+</div>
+

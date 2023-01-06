@@ -95,3 +95,29 @@ footer {
 .teachercontainer{
     min-height:600px;
 }
+
+.teachercourses{
+    color:white;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+     gap:2rem;
+    
+}
+.coursecard {
+    background-color: green;
+    height: 200px;
+    width: auto;
+    background: rgb(52,105,23);
+    background: linear-gradient(180deg, rgba(52,105,23,1) 0%, rgba(20,78,0,1) 100%);
+    padding:1rem;
+    border-radius:1rem;
+    cursor:pointer;
+    transition:all ease-in-out 0.7s;
+   
+
+}
+    .coursecard:hover {
+        background: rgb(34,88,6);
+        background: linear-gradient(180deg, rgba(34,88,6,1) 0%, rgba(150,204,20,1) 100%);
+        transform:scale(1.02);
+    }

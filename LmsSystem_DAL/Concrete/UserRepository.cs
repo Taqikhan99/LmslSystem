@@ -14,13 +14,8 @@ namespace LmsSystem_DAL.Concrete
     public class UserRepository : IUserRepository
     {
         DbClass db = new DbClass();
-        //private SqlConnection con;
-        //string constr = ConfigurationManager.ConnectionStrings["dbConn"].ToString();
-        //void connection()
-        //{
-            
-        //    con = new SqlConnection(constr);
-        //}
+       
+  
 
         /// <summary>
         /// Add new User
