@@ -25,6 +25,7 @@ namespace LmsSystem_DAL.Entities
         public string DepartName { get; set; }
         public string ProgramName { get; set; }
         public int ProgramId { get; set; }
+        
 
     }
 }

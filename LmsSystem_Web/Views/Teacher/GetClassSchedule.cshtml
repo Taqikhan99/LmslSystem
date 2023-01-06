@@ -1,0 +1,54 @@
+﻿@model List<LmsSystem_DAL.Entities.Class>
+@{
+    ViewBag.Title = "GetClassSchedule";
+}
+
+<h2>My Classes Schedule</h2>
+
+
+
+<div class="table-responsive">
+    <table class="table table-bordered" style="color:white; overflow-x:scroll;">
+        <tr class="bg-success">
+
+            <th>
+                Course Name
+            </th>
+            <th>
+                Class Day
+            </th>
+            <th>
+                Class time
+            </th>
+            <th>
+                Room 
+            </th>
+            
+            
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassDay)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room)
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+</div>

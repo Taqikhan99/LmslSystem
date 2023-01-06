@@ -11,6 +11,8 @@ namespace LmsSystem_DAL.Abstract
     {
         List<Course> GetTeacherCourses(string username);
 
-        List<Class> GetClassTimes();
+        List<Class> GetClassTimes(string username);
+
+        Teacher GetTeacherProfile(string username);
     }
 }
