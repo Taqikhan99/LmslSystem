@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LmsSystem_DAL.Entities
 {
@@ -25,5 +26,8 @@ namespace LmsSystem_DAL.Entities
 
         public string DepartName { get; set; }
         public Nullable<DateTime> Joineddate { get; set; }
+
+        public HttpPostedFileBase UserPic { get; set; }
+        public string UserPicPath { get; set; }
     }
 }

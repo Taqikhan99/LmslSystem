@@ -1,7 +1,134 @@
-﻿
+﻿@model LmsSystem_DAL.Entities.Teacher
 @{
     ViewBag.Title = "TeacherProfile";
 }
 
-<h2>TeacherProfile</h2>
+@System.Web.Optimization.Styles.Render("~/Content/fontawesome");
+<h2 class="text-center text-light">TeacherProfile</h2>
+<div class="profilecontainer mt-5 p-3" id="profilecontainer">
+
+    <div class="text-center">
+        <img src="~/Content/images/teacher.png" width="150" />
+    </div>
+    <div class="profiledetails  p-3 text-center">
+        @* ----- *@
+        <table style="width:100%;border:none">
+            <tr>
+                <th><h4>USERNAME:</h4></th>
+                <td><h4>@User.Identity.Name</h4></td>
+
+            </tr>
+
+            <tr>
+                <th><h4>FIRST NAME:</h4></th>
+                <td><h4>@Model.FirstName</h4></td>
+            </tr>
+            <tr>
+                <th><h4>LAST NAME:</h4></th>
+                <td><h4>@Model.LastName</h4></td>
+            </tr>
+            <tr>
+                <th><h4>EMAIL:</h4></th>
+                <td><h4>@Model.Email</h4></td>
+            </tr>
+            <tr>
+                <th><h4>PHONE:</h4></th>
+                <td><h4>@Model.Phone</h4></td>
+            </tr>
+
+
+
+        </table>
+
+        <button class="btn w-25 btn-primary" onclick="openPopup()">Edit Profile</button>
+
+
+    </div>
+
+
+
+</div>
+<div class="popup " id="popup">
+    <i onclick="closepopup()" id="closebtn" class="btn fa fa-minus-circle text-light" aria-hidden="true"></i>
+    @* form to create a user *@
+    <form method="post" action="UpdateTeacherProfile" enctype="multipart/form-data">
+        <div class="row mb-3 d-flex justify-content-center">
+            <div class="col-6  text-light">
+                <div class="imgcontainer border d-flex justify-content-center p-3 ">
+                    <img id="img1" />
+                </div>
+
+                <input type='file' name="UserPic" onchange="readURL(this);" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="username" name="UserName" value="@Model.Username" placeholder="Enter User Name">
+
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userLname" name="Password" value="@Model.Password" placeholder="Enter Password">
+            </div>
+
+
+        </div>
+        @* -- *@
+        <div class="row">
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userAddress" name="Address" value="@Model.Address" placeholder="Enter Address">
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+                <input type="text" class="form-control" id="userPhone" name="Phone" value="@Model.Phone" placeholder="Enter Phone Number">
+            </div>
+
+
+        </div>
+
+
+
+        <div class="d-grid gap-2">
+            <button type="submit" onclick="return validate()" class="btn btn-primary">Save</button>
+
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+
+    let popUp = document.getElementById("popup");
+    let container = document.getElementById("profilecontainer");
+
+    const openPopup = () => {
+        popUp.classList.add("open-popup");
+        container.classList.add('disable')
+    }
+    const closepopup = () => {
+        popUp.classList.remove("open-popup");
+        container.classList.remove('disable')
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#img1')
+                    .attr('src', e.target.result)
+                    .width(120)
+                    .height(120);
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 

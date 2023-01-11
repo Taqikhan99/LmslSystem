@@ -3,9 +3,13 @@ using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+using System.Web;
+
+
 
 namespace LmsSystem_DAL.Concrete
 {
@@ -72,7 +76,7 @@ namespace LmsSystem_DAL.Concrete
         {
             Teacher teacher = null;
             DataTable dt = db.execQuery(
-                $"select UserName,DepartName,FirstName,LastName,Email,Phone,[Address] from UserTb u inner join " +
+                $"select Id, UserName,DepartName,FirstName,LastName,Password,Email,Phone,[Address] from UserTb u inner join " +
                 $"TeacherTb t on u.LinkId=t.TeacherId inner join DepartmentTb d on u.DepartId=d.DepartmentId " +
                 $"where RoleId = 2 and UserName='{username}'"
                 );
@@ -81,18 +85,53 @@ namespace LmsSystem_DAL.Concrete
                 DataRow r = dt.Rows[0];
                 teacher = new Teacher
                 {
+                    Id = Convert.ToInt32(r["Id"]),
                     Username = r["UserName"].ToString(),
                     DepartName = r["DepartName"].ToString(),
                     FirstName = r["FirstName"].ToString(),
                     LastName = r["LastName"].ToString(),
                     Email = r["Email"].ToString(),
                     Phone = r["Phone"].ToString(),
-                    Address = r["Address"].ToString()
+                    Address = r["Address"].ToString(),
+                    Password = r["Password"].ToString()
                 };
             }
 
             return teacher;
             throw new NotImplementedException();
         }
+
+        public string UpdateTeacherProfile(Teacher teacher)
+        {
+            Teacher teacher1 = new Teacher();
+            string extension =Path.GetExtension(teacher.UserPic.FileName);
+
+            //check if extension is jpg, jpeg or png
+            if (extension.ToLower().Equals(".jpg") || extension.ToLower().Equals(".jpeg") || extension.ToLower().Equals(".png"))
+            {
+
+
+                string filename = HttpContext.Current.User.Identity.Name + "_" + Path.GetFileName(teacher.UserPic.FileName) + Path.GetExtension(teacher.UserPic.FileName);
+
+                teacher.UserPicPath = "~/Content/Images/profilepics/" + filename;
+
+
+                if (teacher.UserPic != null)
+                {
+                    string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), filename);
+                    //string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), HttpContext.Current.User.Identity.Name + "_" + Path.GetFileName((teacher.UserPic.FileName))+ Path.GetExtension(teacher.UserPic.FileName));
+                    teacher.UserPic.SaveAs(path);
+                    return "Image Added";
+                }
+            }
+            else
+            {
+                return "Image should be in correct format";
+            }
+            return "Some Error Occured!";
+
+
+        }
+
     }
 }

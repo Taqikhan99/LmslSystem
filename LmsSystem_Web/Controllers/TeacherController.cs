@@ -3,6 +3,7 @@ using LmsSystem_DAL.Concrete;
 using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -70,6 +71,30 @@ namespace LmsSystem_Web.Controllers
             }
 
         }
+
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult UpdateTeacherProfile(Teacher t,HttpPostedFileBase file) {
+            try
+            {
+                string message= _teacherrepo.UpdateTeacherProfile(t);
+
+                if(message=="Image Added")
+                {
+                    TempData["message"] = message;
+                    return RedirectToAction("Index", "User");
+                }
+                return RedirectToAction("TeacherProfile");
+
+            }
+            catch(Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        
+        }
+
+       
 
     }
 }
