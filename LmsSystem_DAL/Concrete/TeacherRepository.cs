@@ -3,6 +3,7 @@ using LmsSystem_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -76,7 +77,7 @@ namespace LmsSystem_DAL.Concrete
         {
             Teacher teacher = null;
             DataTable dt = db.execQuery(
-                $"select Id, UserName,DepartName,FirstName,LastName,Password,Email,Phone,[Address] from UserTb u inner join " +
+                $"select Id,UserPicture, UserName,DepartName,FirstName,LastName,Password,Email,Phone,[Address] from UserTb u inner join " +
                 $"TeacherTb t on u.LinkId=t.TeacherId inner join DepartmentTb d on u.DepartId=d.DepartmentId " +
                 $"where RoleId = 2 and UserName='{username}'"
                 );
@@ -93,12 +94,13 @@ namespace LmsSystem_DAL.Concrete
                     Email = r["Email"].ToString(),
                     Phone = r["Phone"].ToString(),
                     Address = r["Address"].ToString(),
-                    Password = r["Password"].ToString()
+                    Password = r["Password"].ToString(),
+                    UserPicPath = r["UserPicture"].ToString()
                 };
             }
 
             return teacher;
-            throw new NotImplementedException();
+            
         }
 
         public string UpdateTeacherProfile(Teacher teacher)
@@ -121,9 +123,21 @@ namespace LmsSystem_DAL.Concrete
                     string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), filename);
                     //string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), HttpContext.Current.User.Identity.Name + "_" + Path.GetFileName((teacher.UserPic.FileName))+ Path.GetExtension(teacher.UserPic.FileName));
                     teacher.UserPic.SaveAs(path);
-                    
-                    
+                    List<SqlParameter> sqlParameters = new List<SqlParameter>();
+                    sqlParameters.Add(new SqlParameter("@Id", teacher.Id));
+                    sqlParameters.Add(new SqlParameter("@username", teacher.Username));
+                    sqlParameters.Add(new SqlParameter("@password", teacher.Password));
+                    sqlParameters.Add(new SqlParameter("@address", teacher.Address));
+                    sqlParameters.Add(new SqlParameter("@phone", teacher.Phone));
+                    sqlParameters.Add(new SqlParameter("@imagepath", teacher.UserPicPath));
 
+                    bool updated = db.execInsertProc("spUpdateTeacherProfile", sqlParameters);
+
+                    if (updated)
+                    {
+                        return "Profile Updated Success!";
+                    }
+                   
                 }
             }
             else

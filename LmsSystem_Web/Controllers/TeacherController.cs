@@ -79,7 +79,7 @@ namespace LmsSystem_Web.Controllers
             {
                 string message= _teacherrepo.UpdateTeacherProfile(t);
 
-                if(message=="Image Added")
+                if(message== "Profile Updated Success!")
                 {
                     TempData["message"] = message;
                     return RedirectToAction("Index", "User");

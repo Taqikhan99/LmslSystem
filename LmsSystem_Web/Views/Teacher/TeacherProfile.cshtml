@@ -8,7 +8,7 @@
 <div class="profilecontainer mt-5 p-3" id="profilecontainer">
 
     <div class="text-center">
-        <img src="~/Content/images/teacher.png" width="150" />
+        <img src="@Url.Content(@Model.UserPicPath)" alt="@Model.UserPicPath" width="150" />
     </div>
     <div class="profiledetails  p-3 text-center">
         @* ----- *@
@@ -62,6 +62,7 @@
             </div>
         </div>
         <div class="row">
+            <input type="hidden" id="Id" name="Id" value="@Model.Id">
             <div class="col-md-6 mb-4">
 
                 <input type="text" class="form-control" id="username" name="UserName" value="@Model.Username" placeholder="Enter User Name">
