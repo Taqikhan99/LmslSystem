@@ -121,7 +121,9 @@ namespace LmsSystem_DAL.Concrete
                     string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), filename);
                     //string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Content/images/profilepics/"), HttpContext.Current.User.Identity.Name + "_" + Path.GetFileName((teacher.UserPic.FileName))+ Path.GetExtension(teacher.UserPic.FileName));
                     teacher.UserPic.SaveAs(path);
-                    return "Image Added";
+                    
+                    
+
                 }
             }
             else
