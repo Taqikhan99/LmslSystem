@@ -38,4 +38,4 @@ This is a learning management project made in asp.net mvc 5 and sql server datab
 - Students can register for new courses if eligible.
 ## Demo
 ### Er Diagram
-![ERD](DemoImages/erd.png)
+![ERD](DemoImages/erd.PNG)
