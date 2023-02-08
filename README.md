@@ -37,3 +37,5 @@ This is a learning management project made in asp.net mvc 5 and sql server datab
 - Students can see the courses they are enrolled in.
 - Students can register for new courses if eligible.
 ## Demo
+### Er Diagram
+![ERD](DemoImages/erd.png)
